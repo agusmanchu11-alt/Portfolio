@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agustín Nahuel Rodríguez | Marketing Digital · E-commerce · Contenido</title>
-    <meta name="description" content="Portfolio profesional de Agustín Nahuel Rodríguez: experiencia práctica en e-commerce, marketing digital, creación de contenido y gestión de Cromito.">
+    <title>Agustín Nahuel Rodríguez | Editor de Video · Marketing Digital · E-commerce</title>
+    <meta name="description" content="Portfolio profesional de Agustín Nahuel Rodríguez: editor de video (After Effects y Premiere Pro) con experiencia práctica en e-commerce, marketing digital, creación de contenido y gestión de Cromito.">
     <meta name="theme-color" content="#0f172a">
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Agustín Nahuel Rodríguez | Marketing Digital y E-commerce">
+    <meta property="og:title" content="Agustín Nahuel Rodríguez | Editor de Video, Marketing Digital y E-commerce">
     <meta property="og:description" content="Experiencia práctica en e-commerce, contenido para redes sociales y gestión de Cromito.">
     <meta property="og:locale" content="es_AR">
     <script src="https://cdn.tailwindcss.com"></script>
@@ -200,6 +200,20 @@
         }
         .nav-link:hover::after { transform: scaleX(1); }
 
+        /* Edición de video: miniatura interactiva */
+        .vid-wrap { transition: transform .5s cubic-bezier(.22,1,.36,1); }
+        .vid-wrap:hover { transform: translateY(-6px); }
+        .vid-card { transition: box-shadow .5s ease; cursor: pointer; }
+        .vid-card:hover { box-shadow: 0 30px 80px rgba(37, 99, 235, 0.35); }
+        .vid-prev { opacity: 0; transition: opacity .5s ease; }
+        .vid-card.is-prev .vid-prev { opacity: 1; }
+        .vid-play { transition: transform .5s cubic-bezier(.22,1,.36,1), background .5s ease, opacity .4s ease; }
+        .vid-card:hover .vid-play { transform: scale(1.12); background: rgba(37, 99, 235, 0.95); }
+        .vid-card.is-prev .vid-play { opacity: 0; }
+        .vid-bar { position: absolute; left: 0; bottom: 0; height: 3px; width: 0; background: linear-gradient(90deg, #2563eb, #93c5fd); }
+        #vm { background: transparent; padding: 0; border: 0; max-width: 100vw; max-height: 100vh; overflow: visible; }
+        #vm::backdrop { background: rgba(2, 6, 23, 0.88); backdrop-filter: blur(8px); }
+
         @media (prefers-reduced-motion: reduce) {
             *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
             .reveal { opacity: 1; transform: none; }
@@ -216,8 +230,9 @@
                     <span class="w-2.5 h-2.5 rounded-full bg-electric shadow-[0_0_12px_rgba(37,99,235,0.9)]"></span>
                     <span>agustin<span class="text-ice">.dev</span></span>
                 </a>
-                <div class="hidden md:flex items-center gap-8 font-mono text-[13px] tracking-wide">
+                <div class="hidden lg:flex items-center gap-8 font-mono text-[13px] tracking-wide">
                     <a href="#sobre-mi" class="nav-link text-slate-300 hover:text-white transition-colors">SOBRE MÍ</a>
+                    <a href="#edicion" class="nav-link text-slate-300 hover:text-white transition-colors">EDICIÓN</a>
                     <a href="#cromito" class="nav-link text-slate-300 hover:text-white transition-colors">PROYECTO</a>
                     <a href="#reels" class="nav-link text-slate-300 hover:text-white transition-colors">REELS</a>
                     <a href="#competencias" class="nav-link text-slate-300 hover:text-white transition-colors">SKILLS</a>
@@ -227,7 +242,7 @@
                     <a href="mailto:rodriguezagustin3241@gmail.com" class="hidden sm:inline-flex cta-primary text-white text-sm font-semibold px-5 py-2.5 rounded-xl">
                         Contactar
                     </a>
-                    <button id="menu-btn" class="md:hidden text-slate-300 hover:text-white p-2" aria-label="Abrir menú">
+                    <button id="menu-btn" class="lg:hidden text-slate-300 hover:text-white p-2" aria-label="Abrir menú">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                             <path id="menu-icon" d="M4 7h16M4 12h16M4 17h16" />
                         </svg>
@@ -235,8 +250,9 @@
                 </div>
             </div>
             <!-- Mobile menu -->
-            <div id="mobile-menu" class="md:hidden hidden mt-2 rounded-2xl glass-strong p-5 space-y-4 font-mono text-sm">
+            <div id="mobile-menu" class="lg:hidden hidden mt-2 rounded-2xl glass-strong p-5 space-y-4 font-mono text-sm">
                 <a href="#sobre-mi" class="block text-slate-300 hover:text-white">SOBRE MÍ</a>
+                <a href="#edicion" class="block text-slate-300 hover:text-white">EDICIÓN</a>
                 <a href="#cromito" class="block text-slate-300 hover:text-white">PROYECTO</a>
                 <a href="#reels" class="block text-slate-300 hover:text-white">REELS</a>
                 <a href="#competencias" class="block text-slate-300 hover:text-white">SKILLS</a>
@@ -267,16 +283,28 @@
                 Marketing Digital <span class="text-electric">·</span> E-commerce <span class="text-electric">·</span> Contenido para Redes Sociales
             </p>
 
+            <div class="reveal mt-7" style="transition-delay:.25s">
+                <a href="#edicion" class="inline-flex items-center gap-3 glass rounded-full pl-2 pr-5 py-2 hover:bg-white/10 transition-colors">
+                    <span class="flex -space-x-2"><svg width="30" height="30" viewBox="0 0 48 48" class="shrink-0" role="img" aria-label="After Effects"><rect x="1" y="1" width="46" height="46" rx="11" fill="#00005b" stroke="#9999ff" stroke-opacity=".6" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Space Grotesk,Inter,sans-serif" font-weight="700" font-size="21" fill="#9999ff">Ae</text></svg><svg width="30" height="30" viewBox="0 0 48 48" class="shrink-0" role="img" aria-label="Premiere Pro"><rect x="1" y="1" width="46" height="46" rx="11" fill="#00005b" stroke="#ea77ff" stroke-opacity=".6" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Space Grotesk,Inter,sans-serif" font-weight="700" font-size="21" fill="#ea77ff">Pr</text></svg></span>
+                    <span class="font-display font-semibold text-white text-sm">Editor de video</span>
+                    <span class="hidden sm:inline font-mono text-xs text-slate-400">After Effects · Premiere Pro</span>
+                </a>
+            </div>
+
             <p class="reveal mt-5 max-w-2xl mx-auto text-slate-400 text-sm sm:text-base leading-relaxed" style="transition-delay:.3s">
                 Estudiante de 7.º año de escuela técnica con orientación en informática. Fundador de
                 <strong class="text-white font-semibold">Cromito</strong>, tienda de e-commerce con más de
-                <strong class="text-ice font-semibold">78 ventas concretadas</strong>. Apasionado por las tiendas online, el marketing digital y la producción audiovisual.
+                <strong class="text-ice font-semibold">78 ventas concretadas</strong>. Edito video con <strong class="text-white font-semibold">After Effects</strong> y <strong class="text-white font-semibold">Premiere Pro</strong>, y me apasionan las tiendas online, el marketing digital y la producción audiovisual.
             </p>
 
             <div class="reveal mt-10 flex flex-wrap justify-center gap-4" style="transition-delay:.4s">
                 <a href="mailto:rodriguezagustin3241@gmail.com" class="cta-primary text-white font-semibold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
                     Contactar por Email
+                </a>
+                <a href="#edicion" class="glass text-white font-semibold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5 hover:bg-white/10 hover:-translate-y-0.5 transition-all duration-300">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+                    Ver mi edición
                 </a>
                 <a href="https://cromito.mitiendanube.com" target="_blank" rel="noopener noreferrer" class="glass text-white font-semibold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5 hover:bg-white/10 hover:-translate-y-0.5 transition-all duration-300">
                     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
@@ -311,10 +339,10 @@
     <div class="relative py-6 border-y border-white/5 overflow-hidden">
         <div class="marquee-track flex whitespace-nowrap gap-12 font-mono text-sm text-slate-500 tracking-[0.25em] uppercase w-max">
             <span class="flex gap-12 shrink-0">
-                <span>Marketing Digital</span><span class="text-electric">✦</span><span>E-commerce</span><span class="text-electric">✦</span><span>Contenido Audiovisual</span><span class="text-electric">✦</span><span>Tiendanube</span><span class="text-electric">✦</span><span>Instagram</span><span class="text-electric">✦</span><span>Edición de Video</span><span class="text-electric">✦</span><span>Storytelling</span><span class="text-electric">✦</span>
+                <span>Marketing Digital</span><span class="text-electric">✦</span><span>E-commerce</span><span class="text-electric">✦</span><span>Contenido Audiovisual</span><span class="text-electric">✦</span><span>Tiendanube</span><span class="text-electric">✦</span><span>Instagram</span><span class="text-electric">✦</span><span>Edición de Video</span><span class="text-electric">✦</span><span>After Effects</span><span class="text-electric">✦</span><span>Premiere Pro</span><span class="text-electric">✦</span><span>Storytelling</span><span class="text-electric">✦</span>
             </span>
             <span class="flex gap-12 shrink-0" aria-hidden="true">
-                <span>Marketing Digital</span><span class="text-electric">✦</span><span>E-commerce</span><span class="text-electric">✦</span><span>Contenido Audiovisual</span><span class="text-electric">✦</span><span>Tiendanube</span><span class="text-electric">✦</span><span>Instagram</span><span class="text-electric">✦</span><span>Edición de Video</span><span class="text-electric">✦</span><span>Storytelling</span><span class="text-electric">✦</span>
+                <span>Marketing Digital</span><span class="text-electric">✦</span><span>E-commerce</span><span class="text-electric">✦</span><span>Contenido Audiovisual</span><span class="text-electric">✦</span><span>Tiendanube</span><span class="text-electric">✦</span><span>Instagram</span><span class="text-electric">✦</span><span>Edición de Video</span><span class="text-electric">✦</span><span>After Effects</span><span class="text-electric">✦</span><span>Premiere Pro</span><span class="text-electric">✦</span><span>Storytelling</span><span class="text-electric">✦</span>
             </span>
         </div>
     </div>
@@ -335,8 +363,7 @@
                     promociones y coordinación de pedidos y envíos.
                 </p>
                 <p class="text-slate-400 leading-relaxed mt-4">
-                    Busco una oportunidad <strong class="text-white">junior</strong> en <strong class="text-white">marketing digital</strong> o
-                    <strong class="text-white">e-commerce</strong> donde aportar mi experiencia práctica y seguir desarrollándome profesionalmente.
+                    Busco una oportunidad <strong class="text-white">junior</strong> en <strong class="text-white">marketing digital</strong>, <strong class="text-white">e-commerce</strong> o <strong class="text-white">edición de video</strong> donde aportar mi experiencia práctica y seguir desarrollándome profesionalmente.
                 </p>
                 <div class="gradient-line mt-8 mb-6"></div>
                 <div class="flex flex-wrap gap-x-8 gap-y-3 font-mono text-xs text-slate-400">
@@ -377,11 +404,80 @@
         </div>
     </section>
 
+    <!-- EDICIÓN DE VIDEO -->
+    <section id="edicion" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
+        <div class="reveal flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+            <div>
+                <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">02 / Edición de video</span>
+                <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Edición de <span class="gradient-text">video</span> y motion graphics</h2>
+            </div>
+            <span class="font-mono text-xs text-slate-400 glass rounded-full px-4 py-2 self-start sm:self-auto">After Effects · Premiere Pro</span>
+        </div>
+
+        <div class="mt-10 grid lg:grid-cols-5 gap-6 items-start">
+            <div class="reveal lg:col-span-2 lg:order-last">
+                <div class="vid-wrap">
+                    <button type="button" id="vc" class="vid-card relative block w-full mx-auto aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-blue-500/10 text-left" style="max-width:320px;" aria-label="Reproducir video: Práctica de After Effects">
+                        <img src="miniatura-after-effects.jpg" alt="Miniatura del video de práctica de After Effects" width="720" height="1280" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
+                        <video id="vp" class="vid-prev absolute inset-0 w-full h-full object-cover" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
+                        <span class="absolute inset-0 block bg-gradient-to-t from-slate-950/95 via-slate-950/5 to-slate-950/40"></span>
+                        <span class="scanline"></span>
+                        <span class="absolute top-4 left-4 right-4 flex items-center justify-between">
+                            <span class="flex items-center gap-2"><svg width="28" height="28" viewBox="0 0 48 48" class="shrink-0" role="img" aria-label="After Effects"><rect x="1" y="1" width="46" height="46" rx="11" fill="#00005b" stroke="#9999ff" stroke-opacity=".6" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Space Grotesk,Inter,sans-serif" font-weight="700" font-size="21" fill="#9999ff">Ae</text></svg><span class="font-mono text-[10px] tracking-widest text-ice/90 uppercase">After Effects</span></span>
+                            <span class="glass rounded-full px-2.5 py-1 font-mono text-[10px] tracking-widest text-white/80">0:12</span>
+                        </span>
+                        <span class="vid-play absolute inset-0 m-auto w-16 h-16 rounded-full glass-strong flex items-center justify-center shadow-[0_0_40px_rgba(37,99,235,0.5)]">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" class="ml-1"><path d="M8 5v14l11-7z"/></svg>
+                        </span>
+                        <span id="vb" class="vid-bar"></span>
+                        <span class="absolute bottom-0 inset-x-0 block p-5 pb-6">
+                            <span class="block font-display font-semibold text-white">Práctica de After Effects</span>
+                            <span class="block text-slate-300 text-xs mt-1 leading-relaxed">Video de práctica de After Effects creado por mí.</span>
+                        </span>
+                    </button>
+                </div>
+                <p class="mt-4 text-center font-mono text-xs text-slate-500">Clic para ver el video completo</p>
+            </div>
+
+            <div class="lg:col-span-3 space-y-6">
+                <div class="reveal glass corner-dots rounded-3xl p-8 glow-border" style="transition-delay:.1s">
+                    <p class="text-slate-300 leading-relaxed text-base sm:text-lg">
+                        Edito video para redes sociales: <strong class="text-white">reels, piezas promocionales y animación de texto</strong>.
+                        Tengo conocimientos en <strong class="text-ice">Adobe Premiere Pro</strong> para el montaje y en
+                        <strong class="text-ice">After Effects</strong> para animación y motion graphics, y sigo practicando con proyectos propios.
+                    </p>
+                </div>
+                <div class="grid sm:grid-cols-2 gap-6">
+                    <div class="reveal glass corner-dots rounded-3xl p-7 glow-border" style="transition-delay:.18s">
+                        <div class="flex items-center gap-4">
+                            <svg width="48" height="48" viewBox="0 0 48 48" class="shrink-0" role="img" aria-label="After Effects"><rect x="1" y="1" width="46" height="46" rx="11" fill="#00005b" stroke="#9999ff" stroke-opacity=".6" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Space Grotesk,Inter,sans-serif" font-weight="700" font-size="21" fill="#9999ff">Ae</text></svg>
+                            <div>
+                                <h3 class="font-display font-semibold text-white text-lg">After Effects</h3>
+                                <span class="font-mono text-xs text-slate-400">Animación y motion graphics</span>
+                            </div>
+                        </div>
+                        <p class="text-slate-400 text-sm mt-4 leading-relaxed">Animación de texto y composición de capas en piezas verticales para redes.</p>
+                    </div>
+                    <div class="reveal glass corner-dots rounded-3xl p-7 glow-border" style="transition-delay:.26s">
+                        <div class="flex items-center gap-4">
+                            <svg width="48" height="48" viewBox="0 0 48 48" class="shrink-0" role="img" aria-label="Premiere Pro"><rect x="1" y="1" width="46" height="46" rx="11" fill="#00005b" stroke="#ea77ff" stroke-opacity=".6" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Space Grotesk,Inter,sans-serif" font-weight="700" font-size="21" fill="#ea77ff">Pr</text></svg>
+                            <div>
+                                <h3 class="font-display font-semibold text-white text-lg">Premiere Pro</h3>
+                                <span class="font-mono text-xs text-slate-400">Montaje y edición</span>
+                            </div>
+                        </div>
+                        <p class="text-slate-400 text-sm mt-4 leading-relaxed">Cortes, ritmo, audio y exportación de reels y videos promocionales.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- CROMITO / PROYECTO PRINCIPAL -->
     <section id="cromito" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
         <div class="reveal flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
             <div>
-                <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">02 / Caso de estudio</span>
+                <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">03 / Caso de estudio</span>
                 <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Cromito — <span class="gradient-text">E-commerce & Social Media</span></h2>
             </div>
             <span class="font-mono text-xs text-slate-400 glass rounded-full px-4 py-2 self-start sm:self-auto">Febrero 2026 – Actualidad</span>
@@ -460,7 +556,7 @@
     <!-- REELS -->
     <section id="reels" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
         <div class="reveal">
-            <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">03 / Portfolio audiovisual</span>
+            <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">04 / Portfolio audiovisual</span>
             <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Reels de <span class="gradient-text">Instagram</span></h2>
             <p class="text-slate-400 mt-4 max-w-2xl leading-relaxed">Muestra de edición de video: piezas publicadas en el canal oficial de la marca
                 <a href="https://instagram.com/cromito.ar" target="_blank" rel="noopener noreferrer" class="text-ice hover:text-white font-medium transition-colors">@cromito.ar</a>.
@@ -538,7 +634,7 @@
     <!-- COMPETENCIAS -->
     <section id="competencias" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
         <div class="reveal">
-            <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">04 / Habilidades</span>
+            <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">05 / Habilidades</span>
             <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Competencias</h2>
         </div>
 
@@ -555,7 +651,8 @@
                     <li class="flex items-start gap-3"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-electric shrink-0"></span><span class="text-slate-300">Tiendanube <span class="text-slate-500">(Catálogo y gestión)</span></span></li>
                     <li class="flex items-start gap-3"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-electric shrink-0"></span><span class="text-slate-300">Instagram <span class="text-slate-500">(Estrategia y publicaciones)</span></span></li>
                     <li class="flex items-start gap-3"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-electric shrink-0"></span><span class="text-slate-300">CapCut & Filmora <span class="text-slate-500">(Edición de video)</span></span></li>
-                    <li class="flex items-start gap-3"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-electric shrink-0"></span><span class="text-slate-300">Adobe Premiere <span class="text-slate-500">(Nivel básico)</span></span></li>
+                    <li class="flex items-start gap-3"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-electric shrink-0"></span><span class="text-slate-300">Adobe Premiere Pro <span class="text-slate-500">(Montaje y edición)</span></span></li>
+                    <li class="flex items-start gap-3"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-electric shrink-0"></span><span class="text-slate-300">Adobe After Effects <span class="text-slate-500">(Animación y motion graphics)</span></span></li>
                     <li class="flex items-start gap-3"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-electric shrink-0"></span><span class="text-slate-300">Herramientas de Inteligencia Artificial</span></li>
                 </ul>
             </div>
@@ -595,7 +692,7 @@
     <!-- CERTIFICACIONES -->
     <section id="certificaciones" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
         <div class="reveal">
-            <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">05 / Formación continua</span>
+            <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">06 / Formación continua</span>
             <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Cursos y <span class="gradient-text">Certificaciones</span></h2>
         </div>
 
@@ -698,7 +795,7 @@
             <div class="spotlight top-[-60%] left-1/2 -translate-x-1/2 !w-[80vmax] !h-[80vmax]"></div>
             <div class="relative">
                 <h2 class="font-display font-bold text-white text-3xl sm:text-5xl tracking-tight">¿Buscás talento <span class="gradient-text">junior</span>?</h2>
-                <p class="text-slate-400 mt-5 max-w-xl mx-auto leading-relaxed">Estoy disponible para posiciones junior en marketing digital o e-commerce. Escribime y conversemos sobre cómo puedo aportar a tu proyecto.</p>
+                <p class="text-slate-400 mt-5 max-w-xl mx-auto leading-relaxed">Estoy disponible para posiciones junior en marketing digital, e-commerce o edición de video. Escribime y conversemos sobre cómo puedo aportar a tu proyecto.</p>
                 <div class="mt-9 flex flex-wrap justify-center gap-4">
                     <a href="mailto:rodriguezagustin3241@gmail.com" class="cta-primary text-white font-semibold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
@@ -741,9 +838,19 @@
                 </div>
             </div>
             <div class="gradient-line mt-10 mb-6"></div>
-            <p class="text-center font-mono text-xs text-slate-600">© 2026 Agustín Nahuel Rodríguez · Marketing Digital · E-commerce · Contenido para Redes Sociales</p>
+            <p class="text-center font-mono text-xs text-slate-600">© 2026 Agustín Nahuel Rodríguez · Edición de Video · Marketing Digital · E-commerce · Contenido para Redes Sociales</p>
         </div>
     </footer>
+
+    <dialog id="vm" aria-label="Práctica de After Effects">
+        <div class="relative glass-strong rounded-3xl p-3 sm:p-4">
+            <button type="button" id="vx" class="absolute -top-3 -right-3 z-10 w-10 h-10 rounded-full glass-strong text-white flex items-center justify-center hover:bg-white/10 transition-colors" aria-label="Cerrar video">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+            <video id="vf" controls playsinline preload="none" poster="miniatura-after-effects.jpg" class="block rounded-2xl bg-black aspect-[9/16] object-contain" style="width:min(88vw,45vh)"></video>
+            <p class="text-slate-300 text-sm mt-3 px-1">Video de práctica de After Effects creado por mí.</p>
+        </div>
+    </dialog>
 
     <script>
         // Scroll reveal (fallback para navegadores sin IntersectionObserver)
@@ -781,6 +888,32 @@
         window.addEventListener('scroll', () => {
             navbar.style.transform = 'translateZ(0)';
         }, { passive: true });
+    
+        // Edición de video: vista previa al pasar el cursor y reproductor completo
+        (() => {
+            const SRC = 'after-effects-practica.mp4';
+            const card = document.getElementById('vc'), pv = document.getElementById('vp'), bar = document.getElementById('vb');
+            const dlg = document.getElementById('vm'), full = document.getElementById('vf');
+            const canPrev = matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches;
+            const startPrev = () => {
+                if (!canPrev || dlg.open) return;
+                if (!pv.getAttribute('src')) pv.src = SRC;
+                pv.play().then(() => card.classList.add('is-prev')).catch(() => {});
+            };
+            const stopPrev = () => { card.classList.remove('is-prev'); pv.pause(); pv.currentTime = 0; bar.style.width = '0'; };
+            card.addEventListener('mouseenter', startPrev);
+            card.addEventListener('mouseleave', stopPrev);
+            pv.addEventListener('timeupdate', () => { bar.style.width = (pv.currentTime / (pv.duration || 1) * 100) + '%'; });
+            card.addEventListener('click', () => {
+                stopPrev();
+                if (!full.getAttribute('src')) full.src = SRC;
+                dlg.showModal();
+                full.play().catch(() => {});
+            });
+            document.getElementById('vx').addEventListener('click', () => dlg.close());
+            dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+            dlg.addEventListener('close', () => { full.pause(); card.focus(); });
+        })();
     </script>
 </body>
 </html>
