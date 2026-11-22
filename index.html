@@ -222,6 +222,30 @@
             *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
             .reveal { opacity: 1; transform: none; }
         }
+
+        /* High-contrast editorial direction */
+        :root { --glass-bg: rgba(255,255,255,.035); --glass-border: rgba(255,255,255,.09); --glass-inner: inset 0 1px 0 rgba(255,255,255,.04); }
+        body { background-color:#09090b; background-image:radial-gradient(ellipse 70% 40% at 50% -12%,rgba(163,230,53,.09),transparent 70%),radial-gradient(ellipse 35% 35% at 90% 42%,rgba(163,230,53,.035),transparent 70%); }
+        .glass { background:rgba(255,255,255,.035); border-color:rgba(255,255,255,.09); }
+        .glass-strong { background:rgba(18,18,21,.82); border-color:rgba(255,255,255,.1); }
+        .gradient-text { background:linear-gradient(120deg,#f4f4f5 0%,#d9f99d 52%,#a3e635 100%); background-clip:text; }
+        .cta-primary { background:linear-gradient(120deg,#a3e635,#84cc16 55%,#a3e635); color:#111!important; }
+        .cta-primary:hover { box-shadow:0 12px 40px rgba(163,230,53,.2); }
+        .glow-border:hover { box-shadow:0 24px 60px rgba(0,0,0,.38),var(--glass-inner); }
+        .glow-border::before { background:conic-gradient(from var(--angle),transparent 0%,rgba(163,230,53,0) 20%,rgba(190,242,100,.75) 50%,rgba(163,230,53,0) 80%,transparent 100%); }
+        .spotlight { background:conic-gradient(from 0deg,transparent 0deg,rgba(163,230,53,.06) 40deg,rgba(190,242,100,.1) 60deg,rgba(163,230,53,.06) 80deg,transparent 120deg); }
+        .orb { opacity:.18; }
+        .reel-visual { background-color:#121215; }
+        .nav-link::after { background:linear-gradient(90deg,#a3e635,transparent); }
+        .text-electric, .text-ice { color:#bef264; }
+        .bg-electric { background-color:#a3e635; }
+        #navbar .mt-4 { background:rgba(18,18,21,.82); }
+        #inicio .reveal.visible { opacity:1; }
+        #inicio p.reveal { color:#b7b7c0; }
+        #inicio .font-mono { color:#c6c6cf; }
+        ::selection { background:rgba(163,230,53,.38); color:#09090b; }
+        ::-webkit-scrollbar-thumb { background:#3f4d24; border-color:#09090b; }
+        ::-webkit-scrollbar-thumb:hover { background:#a3e635; }
     </style>
 </head>
 <body class="font-body text-slate-300 antialiased overflow-x-hidden">
@@ -301,21 +325,14 @@
                 <strong class="text-ice font-semibold">78 ventas concretadas</strong>. Soy editor de video con <strong class="text-white font-semibold">After Effects</strong> y <strong class="text-white font-semibold">Premiere Pro</strong>, y me apasionan las tiendas online, el marketing digital y la producción audiovisual.
             </p>
 
-            <div class="reveal mt-10 flex flex-wrap justify-center gap-4" style="transition-delay:.4s">
-                <a href="mailto:rodriguezagustin3241@gmail.com" class="cta-primary text-white font-semibold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
-                    Contactar por Email
-                </a>
-                <a href="#edicion" class="glass text-white font-semibold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5 hover:bg-white/10 hover:-translate-y-0.5 transition-all duration-300">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-                    Ver mi edición
-                </a>
-                <a href="https://cromito.mitiendanube.com" target="_blank" rel="noopener noreferrer" class="glass text-white font-semibold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5 hover:bg-white/10 hover:-translate-y-0.5 transition-all duration-300">
-                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
-                    Ver Tienda Online
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
-                </a>
+            <div class="reveal mt-10 flex flex-wrap justify-center gap-3" style="transition-delay:.4s">
+                <a href="mailto:rodriguezagustin3241@gmail.com" class="cta-primary text-white font-semibold px-6 py-3.5 rounded-2xl inline-flex items-center gap-2.5">Contactar por Email</a>
+                <button type="button" id="copy-email" class="glass text-white font-semibold px-6 py-3.5 rounded-2xl inline-flex items-center gap-2.5 hover:bg-white/10 transition-all">Copiar email</button>
+                <a href="https://wa.me/541164900202" target="_blank" rel="noopener noreferrer" class="glass text-white font-semibold px-6 py-3.5 rounded-2xl inline-flex items-center gap-2.5 hover:bg-white/10 transition-all">WhatsApp</a>
+                <a href="#edicion" class="glass text-white font-semibold px-6 py-3.5 rounded-2xl inline-flex items-center gap-2.5 hover:bg-white/10 transition-all">Ver edición</a>
+                <a href="https://cromito.mitiendanube.com" target="_blank" rel="noopener noreferrer" class="glass text-white font-semibold px-6 py-3.5 rounded-2xl inline-flex items-center gap-2.5 hover:bg-white/10 transition-all">Ver tienda online ↗</a>
             </div>
+            <p id="copy-toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 rounded-full bg-lime-300 px-5 py-3 text-sm font-semibold text-zinc-950 opacity-0 pointer-events-none transition-opacity" role="status" aria-live="polite">Email copiado al portapapeles</p>
 
             <!-- Stats -->
             <div class="reveal mt-16 grid grid-cols-3 gap-3 sm:gap-5 max-w-2xl mx-auto" style="transition-delay:.5s">
@@ -421,7 +438,7 @@
         <!-- Video destacado (4K) -->
         <div class="mt-10">
             <div class="reveal vid-wrap" style="transition-delay:0s">
-<button type="button" class="vid-card relative block w-full aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-violet-500/10 text-left" data-src="modulo-5.mp4" data-poster="miniatura-modulo-5.jpg" data-ratio="16/9" data-title="Módulo 5: rotoscopia y 3D" data-desc="Proyecto del Módulo 5 con rotoscopia y 3D en After Effects, renderizado en 4K." aria-label="Reproducir video: Módulo 5, rotoscopia y 3D">
+<button type="button" class="vid-card relative block w-full aspect-video rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-violet-500/10 text-left" data-src="modulo-5.mp4" data-poster="miniatura-modulo-5.jpg" data-ratio="16/9" data-title="Composición 3D y rotoscopia" data-desc="Composición 3D y rotoscopia en 4K, diseñada para crear un impacto visual inmediato y sostener la atención." aria-label="Reproducir video: Composición 3D y rotoscopia">
                             <img src="miniatura-modulo-5.jpg" alt="Miniatura del video: Módulo 5, rotoscopia y 3D" width="1280" height="720" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
                             <video class="vid-prev absolute inset-0 w-full h-full object-cover" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
                             <span class="absolute inset-0 block bg-gradient-to-t from-slate-950/95 via-slate-950/5 to-slate-950/40"></span>
@@ -443,7 +460,7 @@
                                     <span class="glass rounded-full px-2.5 py-0.5 font-mono text-[10px] tracking-widest text-ice uppercase">3D</span>
                                     <span class="glass rounded-full px-2.5 py-0.5 font-mono text-[10px] tracking-widest text-ice uppercase">Render 4K</span>
                                 </span>
-                                <span class="block font-display font-semibold text-white">Módulo 5: rotoscopia y 3D</span>
+                                <span class="block font-display font-semibold text-white">Composición 3D y rotoscopia</span>
                                 <span class="block text-slate-300 text-xs mt-1 leading-relaxed">Proyecto con rotoscopia y elementos 3D, exportado en 4K.</span>
                             </span>
                         </button>
@@ -453,7 +470,7 @@
         <!-- Videos verticales -->
         <div class="mt-8 grid sm:grid-cols-2 lg:grid-cols-3 gap-8 items-start">
             <div class="reveal vid-wrap" style="transition-delay:0s">
-<button type="button" class="vid-card relative block w-full aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-violet-500/10 text-left" data-src="at-home-personal-care.mp4" data-poster="miniatura-at-home.jpg" data-ratio="9/16" data-title="At Home Personal Care" data-desc="Video de práctica para At Home Personal Care, creado por mí." aria-label="Reproducir video: At Home Personal Care">
+<button type="button" class="vid-card relative block w-full aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-violet-500/10 text-left" data-src="at-home-personal-care.mp4" data-poster="miniatura-at-home.jpg" data-ratio="9/16" data-title="At Home Personal Care" data-desc="Pieza promocional de cuidado personal: ritmo ágil, jerarquía visual y foco en presentar el servicio con claridad." aria-label="Reproducir video: At Home Personal Care">
                             <img src="miniatura-at-home.jpg" alt="Miniatura del video: At Home Personal Care" width="720" height="1280" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
                             <video class="vid-prev absolute inset-0 w-full h-full object-cover" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
                             <span class="absolute inset-0 block bg-gradient-to-t from-slate-950/95 via-slate-950/5 to-slate-950/40"></span>
@@ -468,12 +485,12 @@
                             <span class="vid-bar"></span>
                             <span class="absolute bottom-0 inset-x-0 block p-5 pb-6">
                                 <span class="block font-display font-semibold text-white">At Home Personal Care</span>
-                                <span class="block text-slate-300 text-xs mt-1 leading-relaxed">Video de práctica creado por mí.</span>
+                                <span class="block text-slate-300 text-xs mt-1 leading-relaxed">Montaje dinámico con motion graphics para potenciar la atención y la lectura visual.</span>
                             </span>
                         </button>
 </div>
             <div class="reveal vid-wrap" style="transition-delay:0.1s">
-<button type="button" class="vid-card relative block w-full aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-violet-500/10 text-left" data-src="after-effects-practica.mp4" data-poster="miniatura-after-effects.jpg" data-ratio="9/16" data-title="Práctica de After Effects" data-desc="Video de práctica de After Effects creado por mí." aria-label="Reproducir video: Práctica de After Effects">
+<button type="button" class="vid-card relative block w-full aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-violet-500/10 text-left" data-src="after-effects-practica.mp4" data-poster="miniatura-after-effects.jpg" data-ratio="9/16" data-title="Motion y composición para redes" data-desc="Edición vertical con animación de texto, composición por capas y ritmo pensado para captar atención en los primeros segundos." aria-label="Reproducir video: Motion y composición para redes">
                                 <img src="miniatura-after-effects.jpg" alt="Miniatura del video: Práctica de After Effects" width="720" height="1280" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
                                 <video class="vid-prev absolute inset-0 w-full h-full object-cover" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
                                 <span class="absolute inset-0 block bg-gradient-to-t from-slate-950/95 via-slate-950/5 to-slate-950/40"></span>
@@ -488,12 +505,12 @@
                                 <span class="vid-bar"></span>
                                 <span class="absolute bottom-0 inset-x-0 block p-5 pb-6">
                                     <span class="block font-display font-semibold text-white">Práctica de After Effects</span>
-                                    <span class="block text-slate-300 text-xs mt-1 leading-relaxed">Video de práctica de After Effects creado por mí.</span>
+                                    <span class="block text-slate-300 text-xs mt-1 leading-relaxed">Edición vertical con animación de texto, composición por capas y ritmo para captar atención en los primeros segundos.</span>
                                 </span>
                             </button>
 </div>
             <div class="reveal vid-wrap" style="transition-delay:0.2s">
-<button type="button" class="vid-card relative block w-full aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-violet-500/10 text-left" data-src="video-practica-2.mp4" data-poster="miniatura-video-2.jpg" data-ratio="9/16" data-title="Práctica de motion graphics" data-desc="Video de práctica creado por mí." aria-label="Reproducir video: Práctica de motion graphics">
+<button type="button" class="vid-card relative block w-full aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-violet-500/10 text-left" data-src="video-practica-2.mp4" data-poster="miniatura-video-2.jpg" data-ratio="9/16" data-title="Motion graphics para contenido digital" data-desc="Pieza vertical con animación gráfica y montaje dinámico, diseñada para comunicar una idea con energía y claridad." aria-label="Reproducir video: Motion graphics para contenido digital">
                                 <img src="miniatura-video-2.jpg" alt="Miniatura del video: Práctica de motion graphics" width="720" height="1280" loading="lazy" class="absolute inset-0 w-full h-full object-cover">
                                 <video class="vid-prev absolute inset-0 w-full h-full object-cover" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
                                 <span class="absolute inset-0 block bg-gradient-to-t from-slate-950/95 via-slate-950/5 to-slate-950/40"></span>
@@ -508,7 +525,7 @@
                                 <span class="vid-bar"></span>
                                 <span class="absolute bottom-0 inset-x-0 block p-5 pb-6">
                                     <span class="block font-display font-semibold text-white">Práctica de motion graphics</span>
-                                    <span class="block text-slate-300 text-xs mt-1 leading-relaxed">Video de práctica creado por mí.</span>
+                                    <span class="block text-slate-300 text-xs mt-1 leading-relaxed">Montaje dinámico con motion graphics para potenciar la atención y la lectura visual.</span>
                                 </span>
                             </button>
 </div>
@@ -574,6 +591,29 @@
             </div>
         </div>
 
+        <div class="mt-6 grid sm:grid-cols-2 xl:grid-cols-4 gap-4" aria-label="Recorrido del proyecto Cromito">
+            <article class="reveal glass rounded-3xl p-6 glow-border">
+                <span class="font-mono text-[10px] tracking-[.2em] text-lime-300 uppercase">01 / Problema</span>
+                <h3 class="mt-3 font-display text-lg font-semibold text-white">Construir confianza</h3>
+                <p class="mt-2 text-sm leading-relaxed text-slate-400">Dar visibilidad a una tienda nueva y presentar accesorios e indumentaria con claridad.</p>
+            </article>
+            <article class="reveal glass rounded-3xl p-6 glow-border" style="transition-delay:.06s">
+                <span class="font-mono text-[10px] tracking-[.2em] text-lime-300 uppercase">02 / Estrategia</span>
+                <h3 class="mt-3 font-display text-lg font-semibold text-white">Contenido + catálogo</h3>
+                <p class="mt-2 text-sm leading-relaxed text-slate-400">Combinar publicaciones para redes con un catálogo ordenado y opciones de encargo y stock.</p>
+            </article>
+            <article class="reveal glass rounded-3xl p-6 glow-border" style="transition-delay:.12s">
+                <span class="font-mono text-[10px] tracking-[.2em] text-lime-300 uppercase">03 / Ejecución</span>
+                <h3 class="mt-3 font-display text-lg font-semibold text-white">Operación de punta a punta</h3>
+                <p class="mt-2 text-sm leading-relaxed text-slate-400">Gestionar la tienda, crear piezas audiovisuales, responder consultas y coordinar pedidos.</p>
+            </article>
+            <article class="reveal glass rounded-3xl p-6 glow-border" style="transition-delay:.18s">
+                <span class="font-mono text-[10px] tracking-[.2em] text-lime-300 uppercase">04 / Resultados</span>
+                <h3 class="mt-3 font-display text-lg font-semibold text-white">78+ ventas concretadas</h3>
+                <p class="mt-2 text-sm leading-relaxed text-slate-400">Un proyecto real que reúne experiencia comercial, contenido y gestión e-commerce.</p>
+            </article>
+        </div>
+
         <!-- Enlace Tiendanube -->
         <div class="reveal mt-6 rounded-3xl p-[1px] bg-gradient-to-r from-electric/60 via-ice/30 to-electric/60" style="transition-delay:.1s">
             <div class="rounded-3xl bg-ink/80 backdrop-blur-xl p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
@@ -634,7 +674,7 @@
             <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Reels de <span class="gradient-text">Instagram</span></h2>
             <p class="text-slate-400 mt-4 max-w-2xl leading-relaxed">Muestra de edición de video: piezas publicadas en el canal oficial de la marca
                 <a href="https://instagram.com/cromito.ar" target="_blank" rel="noopener noreferrer" class="text-ice hover:text-white font-medium transition-colors">@cromito.ar</a>.
-                Tocá cada video para verlo en Instagram.</p>
+                Seleccioná un reel para reproducirlo acá, sin salir del portfolio.</p>
         </div>
 
         <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -922,7 +962,9 @@
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
             </button>
             <video id="vf" controls playsinline preload="none" class="block rounded-2xl bg-black object-contain" style="aspect-ratio:9/16;width:min(88vw,45vh)"></video>
+            <iframe id="reel-frame" title="Reel de Instagram" class="hidden rounded-2xl bg-black" style="aspect-ratio:9/16;width:min(88vw,45vh);max-height:78vh" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen loading="lazy"></iframe>
             <p id="vt" class="text-slate-300 text-sm mt-3 px-1"></p>
+            <a id="reel-external" class="hidden mt-2 px-1 text-sm text-lime-300 underline underline-offset-4" target="_blank" rel="noopener noreferrer">Si el reproductor no carga, abrir en Instagram</a>
         </div>
     </dialog>
 
@@ -957,6 +999,19 @@
             menuIcon.setAttribute('d', 'M4 7h16M4 12h16M4 17h16');
         }));
 
+        // One-tap email copy with accessible confirmation
+        const copyEmailButton = document.getElementById('copy-email');
+        const copyToast = document.getElementById('copy-toast');
+        copyEmailButton.addEventListener('click', async () => {
+            try {
+                await navigator.clipboard.writeText('rodriguezagustin3241@gmail.com');
+                copyToast.classList.remove('opacity-0');
+                window.setTimeout(() => copyToast.classList.add('opacity-0'), 2200);
+            } catch {
+                window.location.href = 'mailto:rodriguezagustin3241@gmail.com';
+            }
+        });
+
         // Navbar subtle shadow on scroll
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
@@ -966,6 +1021,7 @@
         // Edición de video: vista previa al pasar el cursor y reproductor completo
         (() => {
             const dlg = document.getElementById('vm'), full = document.getElementById('vf'), cap = document.getElementById('vt');
+            const reelFrame = document.getElementById('reel-frame'), reelExternal = document.getElementById('reel-external');
             const canPrev = matchMedia('(hover:hover) and (pointer:fine)').matches && !matchMedia('(prefers-reduced-motion:reduce)').matches;
             let last = null;
             document.querySelectorAll('.vid-card').forEach(card => {
@@ -983,14 +1039,29 @@
                     const wide = card.dataset.ratio === '16/9';
                     full.style.aspectRatio = wide ? '16/9' : '9/16';
                     full.style.width = wide ? 'min(92vw,142vh)' : 'min(88vw,45vh)';
+                    full.classList.remove('hidden'); reelFrame.classList.add('hidden'); reelExternal.classList.add('hidden');
+                    reelFrame.removeAttribute('src');
                     full.poster = card.dataset.poster; full.src = card.dataset.src;
                     cap.textContent = card.dataset.desc; dlg.setAttribute('aria-label', card.dataset.title);
                     dlg.showModal(); full.play().catch(() => {});
                 });
             });
+            document.querySelectorAll('.reel-card').forEach(card => {
+                card.addEventListener('click', event => {
+                    event.preventDefault(); last = card;
+                    const url = new URL(card.href);
+                    const reelId = url.pathname.match(/\/reel\/([^/]+)/)?.[1];
+                    if (!reelId) { window.open(card.href, '_blank', 'noopener,noreferrer'); return; }
+                    full.pause(); full.classList.add('hidden'); full.removeAttribute('src'); full.load();
+                    reelFrame.classList.remove('hidden'); reelFrame.src = `https://www.instagram.com/reel/${reelId}/embed/`;
+                    reelExternal.href = card.href; reelExternal.classList.remove('hidden');
+                    cap.textContent = card.querySelector('h4')?.textContent || 'Reel de Cromito';
+                    dlg.setAttribute('aria-label', cap.textContent); dlg.showModal();
+                });
+            });
             document.getElementById('vx').addEventListener('click', () => dlg.close());
             dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
-            dlg.addEventListener('close', () => { full.pause(); full.removeAttribute('src'); full.load(); if (last) last.focus(); });
+            dlg.addEventListener('close', () => { full.pause(); full.removeAttribute('src'); full.load(); reelFrame.removeAttribute('src'); if (last) last.focus(); });
         })();
     </script>
 </body>
