@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agustín Nahuel Rodríguez | Editor de Video · Ad Creative · Marketing Digital</title>
+<meta name="description" content="Portfolio de Agustín Nahuel Rodríguez: editor de video short-form, diseño de hooks, ad research y ad creative, contenido gaming (Rocos Gaming) y e-commerce (Cromito).">
+<meta name="theme-color" content="#0d0a1f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Agustín Nahuel Rodríguez | Editor de Video, Ad Creative y Marketing Digital">
+<meta property="og:description" content="Hooks para short-form, ad research y ad creative, contenido gaming y e-commerce.">
+<meta property="og:locale" content="es_AR">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+<!-- Tailwind por CDN: para producción compilalo (ver notas) y reemplazá estas 2 etiquetas por <link rel="stylesheet" href="styles.css"> -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+tailwind.config = { theme: { extend: {
+  colors: { ink: '#0d0a1f', ink2: '#1b1435', electric: '#8b5cf6', ice: '#c4b5fd',
+    slate: { 50: '#f6f4fc', 100: '#ebe7f7', 200: '#d9d3ee', 300: '#c9c2e2', 400: '#a69fc4', 500: '#7f78a0', 600: '#5d5680', 700: '#3b3460', 800: '#241c44', 900: '#150f2e', 950: '#08051a' } },
+  fontFamily: { display: ['"Space Grotesk"', 'sans-serif'], body: ['Inter', 'sans-serif'], mono: ['"JetBrains Mono"', 'monospace'] }
+} } }
+</script>
+<style>
+:root {
+  --glass-border: rgba(196,181,253,.13);
+  --glass-inner: inset 0 1px 1px rgba(236,226,252,.08), inset 0 24px 48px rgba(200,180,245,.04);
+}
+html { scroll-behavior: smooth; scroll-padding-top: 6rem; }
+a:focus-visible, button:focus-visible { outline: 2px solid #c4b5fd; outline-offset: 4px; border-radius: 8px; }
+body { background-color: #0d0a1f; }
+/* Fondo fijo en pseudo-elemento (más barato que background-attachment: fixed) */
+body::before { content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 50% -10%, rgba(139,92,246,.2), transparent),
+    radial-gradient(ellipse 40% 35% at 85% 30%, rgba(234,119,255,.07), transparent),
+    radial-gradient(ellipse 45% 40% at 8% 65%, rgba(153,153,255,.07), transparent); }
+::selection { background: rgba(139,92,246,.5); color: #fff; }
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: #0d0a1f; }
+::-webkit-scrollbar-thumb { background: #241c44; border-radius: 8px; border: 2px solid #0d0a1f; }
+::-webkit-scrollbar-thumb:hover { background: #8b5cf6; }
+
+/* Sin backdrop-filter en tarjetas: fondo más opaco. Blur solo en navbar y modal */
+.glass { background: rgba(40,30,75,.35); border: 1px solid var(--glass-border); box-shadow: var(--glass-inner); }
+.glass-strong { background: rgba(27,20,53,.82); border: 1px solid rgba(196,181,253,.15); box-shadow: var(--glass-inner), 0 20px 50px rgba(6,3,20,.5); }
+#navbar .glass-strong, #vm .glass-strong { background: rgba(27,20,53,.6); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+.gradient-text { background: linear-gradient(120deg, #f3ebff 0%, #b9a6ff 45%, #ea77ff 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.gradient-line { height: 1px; background: linear-gradient(90deg, transparent 0%, rgba(196,181,253,.25) 25%, rgba(196,181,253,.25) 75%, transparent 100%); }
+.corner-dots { position: relative; }
+.corner-dots::before, .corner-dots::after { content: ''; position: absolute; width: 5px; height: 5px; border-radius: 9999px; background: radial-gradient(circle, rgba(196,181,253,.9) 0%, rgba(196,181,253,0) 75%); }
+.corner-dots::before { top: 10px; left: 10px; }
+.corner-dots::after { bottom: 10px; right: 10px; }
+
+@property --angle { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
+.glow-border { position: relative; transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s cubic-bezier(.22,1,.36,1); }
+.glow-border::before { content: ''; position: absolute; inset: -1px; border-radius: inherit; padding: 1px;
+  background: conic-gradient(from var(--angle), transparent 0%, rgba(139,92,246,0) 20%, rgba(216,150,255,.95) 50%, rgba(139,92,246,0) 80%, transparent 100%);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0); -webkit-mask-composite: xor; mask-composite: exclude;
+  opacity: 0; transition: opacity .45s ease; animation: spin-angle 6s linear infinite paused; pointer-events: none; }
+.glow-border:hover { transform: translateY(-4px); box-shadow: 0 24px 60px rgba(139,92,246,.22), var(--glass-inner); }
+.glow-border:hover::before { opacity: 1; animation-play-state: running; }
+@keyframes spin-angle { to { --angle: 360deg; } }
+
+/* Spotlight y orbs con gradientes (sin filter: blur) */
+.spotlight { position: absolute; width: 60vmax; height: 60vmax; border-radius: 50%; pointer-events: none; background: radial-gradient(closest-side, rgba(139,92,246,.22), transparent); }
+.orb { position: absolute; border-radius: 9999px; opacity: .5; pointer-events: none; -webkit-mask-image: radial-gradient(closest-side, #000, transparent); mask-image: radial-gradient(closest-side, #000, transparent); }
+@keyframes float-slow { 0%,100% { transform: translateY(0) } 50% { transform: translateY(-24px) } }
+.animate-float { animation: float-slow 9s ease-in-out infinite; }
+.animate-float-delay { animation: float-slow 11s ease-in-out 2s infinite; }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+/* Una vez revelado, .reveal no pisa las transiciones de hover/tilt */
+.reveal.done { transition: transform .25s ease-out; }
+.reveal.done.glow-border { transition: transform .45s cubic-bezier(.22,1,.36,1), box-shadow .45s cubic-bezier(.22,1,.36,1); }
+
+section { content-visibility: auto; contain-intrinsic-size: auto 800px; }
+
+@keyframes marquee { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+.marquee-track { animation: marquee 32s linear infinite; will-change: transform; }
+.marquee-wrap:hover .marquee-track { animation-play-state: paused; }
+
+.cta-primary { background: linear-gradient(120deg, #7c3aed, #a855f7 50%, #7c3aed); background-size: 200% 100%; transition: background-position .6s ease, transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s ease; }
+.cta-primary:hover { background-position: 100% 0; box-shadow: 0 12px 40px rgba(168,85,247,.5); }
+
+.reel-card:hover .reel-visual { box-shadow: 0 30px 80px rgba(139,92,246,.38); }
+.reel-card:hover .play-btn { transform: scale(1.12); background: rgba(139,92,246,.95); }
+.scanline { position: absolute; left: 0; right: 0; top: 0; height: 28%; transform: translateY(-100%); background: linear-gradient(180deg, transparent, rgba(196,181,253,.1), transparent); animation: scanline 3.5s ease-in-out infinite paused; pointer-events: none; }
+.vid-card:hover .scanline, .reel-card:hover .scanline { animation-play-state: running; }
+@keyframes scanline { to { transform: translateY(400%); } }
+
+.nav-link { position: relative; }
+.nav-link::after { content: ''; position: absolute; left: 0; bottom: -4px; width: 100%; height: 1px; background: linear-gradient(90deg, #c084fc, transparent); transform: scaleX(0); transform-origin: left; transition: transform .35s cubic-bezier(.22,1,.36,1); }
+.nav-link:hover::after, .nav-link.active::after { transform: scaleX(1); }
+.nav-link.active { color: #fff; }
+
+.vid-wrap { will-change: transform; }
+.vid-card { transition: box-shadow .5s ease; cursor: pointer; }
+.vid-card:hover { box-shadow: 0 30px 80px rgba(139,92,246,.38); }
+.vid-prev { opacity: 0; transition: opacity .5s ease; }
+.vid-card.is-prev .vid-prev { opacity: 1; }
+.vid-play { transition: transform .5s cubic-bezier(.22,1,.36,1), background .5s ease, opacity .4s ease; }
+.vid-card:hover .vid-play { transform: scale(1.12); background: rgba(139,92,246,.95); }
+.vid-card.is-prev .vid-play { opacity: 0; }
+.vid-bar { position: absolute; left: 0; bottom: 0; height: 3px; width: 0; background: linear-gradient(90deg, #8b5cf6, #ea77ff); }
+#vm { background: transparent; padding: 0; border: 0; max-width: 100vw; max-height: 100vh; overflow: visible; }
+#vm::backdrop { background: rgba(8,4,24,.94); }
+
+#pgrid { display: flex; flex-wrap: wrap; justify-content: center; gap: 2rem; align-items: flex-start; }
+.pitem { flex: 0 1 340px; max-width: 100%; }
+.pitem.pw { flex: 0 0 100%; }
+.pitem.pop { animation: pop .55s cubic-bezier(.22,1,.36,1) both; }
+@keyframes pop { from { opacity: 0; transform: translateY(18px) scale(.96); } to { opacity: 1; transform: none; } }
+.chip { transition: background .3s ease, color .3s ease, border-color .3s ease, transform .3s ease; }
+.chip:hover { transform: translateY(-2px); }
+.chip[aria-pressed="true"] { background: linear-gradient(120deg, #7c3aed, #a855f7); color: #fff; border-color: transparent; box-shadow: 0 8px 28px rgba(168,85,247,.4); }
+
+.tl { position: relative; }
+.tl::before { content: ''; position: absolute; left: 11px; top: 8px; bottom: 8px; width: 1px; background: linear-gradient(180deg, rgba(196,181,253,.5), rgba(196,181,253,.05)); }
+.tl-dot { position: absolute; left: -34px; top: 30px; width: 15px; height: 15px; border-radius: 9999px; background: #0d0a1f; border: 2px solid #8b5cf6; box-shadow: 0 0 14px rgba(168,85,247,.8); }
+
+.step { transition: background .3s ease, border-color .3s ease, transform .3s ease; border: 1px solid transparent; }
+.step:hover, .step:focus-visible { background: rgba(196,181,253,.07); border-color: rgba(196,181,253,.25); transform: translateX(6px); }
+.step .ts { transition: background .3s ease, color .3s ease; }
+.step:hover .ts { background: #8b5cf6; color: #fff; }
+
+#prog { position: fixed; top: 0; left: 0; height: 3px; width: 100%; z-index: 60; transform-origin: left; transform: scaleX(0); background: linear-gradient(90deg, #8b5cf6, #ea77ff); }
+/* Luz del cursor: círculo chico movido con transform */
+#cur { position: fixed; top: 0; left: 0; width: 420px; height: 420px; margin: -210px 0 0 -210px; z-index: 1; pointer-events: none; opacity: 0; transition: opacity .6s ease; will-change: transform; background: radial-gradient(circle, rgba(139,92,246,.13), transparent 70%); }
+main, header, section, footer { position: relative; z-index: 2; }
+.rot { display: inline-block; transition: opacity .35s ease, transform .35s ease; }
+.rot.out { opacity: 0; transform: translateY(10px); }
+.caret::after { content: ''; display: inline-block; width: 2px; height: 1em; margin-left: 4px; vertical-align: -.12em; background: #c084fc; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+  .reveal { opacity: 1; transform: none; }
+}
+</style>
+</head>
+<body class="font-body text-slate-300 antialiased overflow-x-hidden">
+<div id="prog" aria-hidden="true"></div>
+<div id="cur" aria-hidden="true"></div>
+
+<nav id="navbar" class="fixed top-0 inset-x-0 z-50">
+  <div class="max-w-6xl mx-auto px-5 sm:px-8">
+    <div class="mt-4 flex items-center justify-between rounded-2xl glass-strong px-5 py-3">
+      <a href="#inicio" class="font-display font-bold text-white text-lg tracking-tight flex items-center gap-2.5">
+        <span class="w-2.5 h-2.5 rounded-full bg-electric shadow-[0_0_12px_rgba(168,85,247,0.95)]"></span>
+        <span>agustin<span class="text-ice">.dev</span></span>
+      </a>
+      <div id="nav-d" class="hidden lg:flex items-center gap-7 font-mono text-[13px] tracking-wide"></div>
+      <div class="flex items-center gap-3">
+        <a href="mailto:rodriguezagustin3241@gmail.com" class="magnet hidden sm:inline-flex cta-primary text-white text-sm font-semibold px-5 py-2.5 rounded-xl">Contactar</a>
+        <button id="menu-btn" class="lg:hidden text-slate-300 hover:text-white p-2" aria-label="Abrir menú" aria-expanded="false">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path id="menu-icon" d="M4 7h16M4 12h16M4 17h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="lg:hidden hidden mt-2 rounded-2xl glass-strong p-5 space-y-4 font-mono text-sm"></div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header id="inicio" class="relative min-h-screen flex items-center justify-center overflow-hidden px-5 sm:px-8 pt-32 pb-20">
+  <div class="spotlight top-[-20%] left-1/2 -translate-x-1/2"></div>
+  <div class="orb w-72 h-72 bg-violet-600/30 top-24 -left-16 animate-float"></div>
+  <div class="orb w-96 h-96 bg-fuchsia-500/20 bottom-10 -right-24 animate-float-delay"></div>
+
+  <div class="relative max-w-4xl mx-auto text-center">
+    <div class="reveal inline-flex items-center gap-2 glass rounded-full px-4 py-2 font-mono text-[11px] sm:text-xs tracking-[0.2em] text-ice uppercase mb-8">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.9)] animate-pulse"></span>
+      Disponible para oportunidades junior
+    </div>
+    <h1 class="reveal font-display font-bold text-white leading-[1.05] tracking-tight text-4xl sm:text-6xl lg:text-7xl" style="transition-delay:.1s">
+      Agustín Nahuel<br><span class="gradient-text">Rodríguez</span>
+    </h1>
+    <p class="reveal mt-6 text-lg sm:text-2xl text-slate-200 font-medium min-h-[2.2em] sm:min-h-0" style="transition-delay:.2s">
+      Edito <span id="rot" class="rot gradient-text font-semibold caret">hooks que frenan el scroll</span>
+    </p>
+    <p class="reveal mt-2 text-slate-400 text-sm sm:text-base" style="transition-delay:.22s">
+      Marketing Digital <span class="text-electric">·</span> E-commerce <span class="text-electric">·</span> Contenido para Redes Sociales
+    </p>
+    <div class="reveal mt-7" style="transition-delay:.25s">
+      <a href="#edicion" class="inline-flex items-center gap-3 glass rounded-full pl-2 pr-5 py-2 hover:bg-white/10 transition-colors">
+        <span class="flex -space-x-2" data-ico="ae,pr" data-size="30"></span>
+        <span class="font-display font-semibold text-white text-sm">Editor de video</span>
+        <span class="hidden sm:inline font-mono text-xs text-slate-400">After Effects · Premiere Pro</span>
+      </a>
+    </div>
+    <p class="reveal mt-5 max-w-2xl mx-auto text-slate-400 text-sm sm:text-base leading-relaxed" style="transition-delay:.3s">
+      Editor de video <strong class="text-white font-semibold">short-form</strong> especializado en el <strong class="text-ice font-semibold">diseño de hooks</strong> de retención.
+      Trabajo como <strong class="text-white font-semibold">Ad Research &amp; Ad Creative</strong> freelance, soy creador de contenido de Fortnite en
+      <strong class="text-white font-semibold">Rocos Gaming</strong> (México) y fundé <strong class="text-white font-semibold">Cromito</strong>, un e-commerce con más de
+      <strong class="text-ice font-semibold">78 ventas concretadas</strong>. Estudiante de 7.º año de escuela técnica con orientación en informática.
+    </p>
+    <div class="reveal mt-10 flex flex-wrap justify-center gap-4" style="transition-delay:.4s">
+      <a href="mailto:rodriguezagustin3241@gmail.com" class="magnet cta-primary text-white font-semibold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+        Contactar por Email
+      </a>
+      <a href="#edicion" class="magnet glass text-white font-semibold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5 hover:bg-white/10 transition-colors duration-300">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Ver mi edición
+      </a>
+      <a href="https://cromito.mitiendanube.com" target="_blank" rel="noopener noreferrer" class="magnet glass text-white font-semibold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5 hover:bg-white/10 transition-colors duration-300">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        Ver Tienda Online
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
+    </div>
+    <div class="reveal mt-16 grid grid-cols-3 gap-3 sm:gap-5 max-w-2xl mx-auto" style="transition-delay:.5s">
+      <div class="glass corner-dots rounded-2xl py-5 px-2 sm:px-5">
+        <div class="font-display font-bold text-2xl sm:text-4xl text-white"><span data-count="78">78</span><span class="text-electric">+</span></div>
+        <div class="font-mono text-[10px] sm:text-xs text-slate-400 tracking-wider mt-1 uppercase">Ventas concretadas</div>
+      </div>
+      <div class="glass corner-dots rounded-2xl py-5 px-2 sm:px-5">
+        <div class="font-display font-bold text-2xl sm:text-4xl text-white" data-count="3">3</div>
+        <div class="font-mono text-[10px] sm:text-xs text-slate-400 tracking-wider mt-1 uppercase">Frentes activos</div>
+      </div>
+      <div class="glass corner-dots rounded-2xl py-5 px-2 sm:px-5">
+        <div class="font-display font-bold text-2xl sm:text-4xl text-white" data-count="6">6</div>
+        <div class="font-mono text-[10px] sm:text-xs text-slate-400 tracking-wider mt-1 uppercase">Cursos y credenciales</div>
+      </div>
+    </div>
+  </div>
+  <a href="#sobre-mi" class="absolute bottom-8 left-1/2 -translate-x-1/2 text-slate-500 hover:text-ice transition-colors animate-bounce" aria-label="Bajar">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m-7-7 7 7 7-7"/></svg>
+  </a>
+</header>
+
+<div class="marquee-wrap relative py-6 border-y border-white/5 overflow-hidden">
+  <div class="marquee-track flex whitespace-nowrap gap-12 font-mono text-sm text-slate-500 tracking-[0.25em] uppercase w-max" id="marquee"></div>
+</div>
+
+<!-- SOBRE MÍ -->
+<section id="sobre-mi" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
+  <div class="reveal">
+    <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">01 / Perfil</span>
+    <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Sobre <span class="gradient-text">mí</span></h2>
+  </div>
+  <div class="mt-10 grid md:grid-cols-5 gap-6">
+    <div class="reveal glass corner-dots rounded-3xl p-8 md:col-span-3 glow-border">
+      <p class="text-slate-300 leading-relaxed text-base sm:text-lg">
+        Editor de video <strong class="text-white">short-form</strong> con foco en el <strong class="text-ice">diseño de hooks</strong>: construyo aperturas de los primeros segundos
+        para maximizar la retención. Combino tres frentes: <strong class="text-white">ad research y ad creative</strong> para un cliente freelance,
+        <strong class="text-white">contenido gaming</strong> en Rocos Gaming y la gestión de <strong class="text-ice">Cromito</strong>, mi emprendimiento de
+        <strong class="text-white">comercio electrónico</strong> (publicación de productos, contenido, atención al cliente, ventas, promociones y envíos).
+      </p>
+      <p class="text-slate-400 leading-relaxed mt-4">
+        Soy estudiante de <strong class="text-white">7.º año</strong> de una <strong class="text-white">escuela secundaria técnica</strong> con
+        <strong class="text-white">orientación en informática</strong> (egreso previsto: <strong class="text-white">2026</strong>). Busco una oportunidad <strong class="text-white">junior</strong> en
+        <strong class="text-white">marketing digital</strong>, <strong class="text-white">e-commerce</strong>, <strong class="text-white">ad creative</strong> o como <strong class="text-white">editor de video</strong>.
+      </p>
+      <div class="gradient-line mt-8 mb-6"></div>
+      <div class="flex flex-wrap gap-x-8 gap-y-3 font-mono text-xs text-slate-400">
+        <span class="flex items-center gap-2">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+          Lanús / Valentín Alsina, Buenos Aires
+        </span>
+        <a href="tel:+541164900202" class="flex items-center gap-2 hover:text-ice transition-colors">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.6 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+          11 6490-0202
+        </a>
+        <a href="mailto:rodriguezagustin3241@gmail.com" class="flex items-center gap-2 hover:text-ice transition-colors">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#a78bfa" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          rodriguezagustin3241@gmail.com
+        </a>
+      </div>
+    </div>
+    <div class="reveal md:col-span-2 flex flex-col gap-6" style="transition-delay:.15s">
+      <div class="glass rounded-3xl p-7 glow-border flex-1">
+        <span class="font-mono text-xs text-electric tracking-widest uppercase">Formación académica</span>
+        <h3 class="font-display font-semibold text-white text-lg mt-3">Escuela Secundaria Técnica N.º 2 de Valentín Alsina</h3>
+        <p class="text-slate-400 text-sm mt-2 leading-relaxed">Séptimo año en curso — Egreso previsto: 2026. Orientación en informática y tecnología.</p>
+      </div>
+      <div class="glass rounded-3xl p-7 glow-border flex-1">
+        <span class="font-mono text-xs text-electric tracking-widest uppercase">Idiomas</span>
+        <div class="mt-4 space-y-4">
+          <div>
+            <div class="flex justify-between text-sm mb-1.5"><span class="text-white font-medium">Español</span><span class="font-mono text-xs text-slate-400">Nativo</span></div>
+            <div class="h-1.5 rounded-full bg-slate-700/60 overflow-hidden"><div class="bar h-full rounded-full bg-gradient-to-r from-electric to-fuchsia-400" data-w="100%" style="width:100%"></div></div>
+          </div>
+          <div>
+            <div class="flex justify-between text-sm mb-1.5"><span class="text-white font-medium">Inglés</span><span class="font-mono text-xs text-slate-400">Básico</span></div>
+            <div class="h-1.5 rounded-full bg-slate-700/60 overflow-hidden"><div class="bar h-full rounded-full bg-gradient-to-r from-electric to-fuchsia-400" data-w="35%" style="width:35%"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCIA -->
+<section id="experiencia" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
+  <div class="reveal">
+    <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">02 / Experiencia</span>
+    <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Dónde <span class="gradient-text">trabajo</span> hoy</h2>
+  </div>
+  <div class="tl mt-12 space-y-6 pl-10" id="exp"></div>
+</section>
+
+<!-- PROYECTOS -->
+<section id="edicion" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
+  <div class="reveal flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+    <div>
+      <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">03 / Proyectos</span>
+      <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Edición de <span class="gradient-text">video</span> y motion graphics</h2>
+    </div>
+    <span class="font-mono text-xs text-slate-400 glass rounded-full px-4 py-2 self-start sm:self-auto">After Effects · Premiere Pro</span>
+  </div>
+  <div class="reveal mt-8 flex flex-wrap gap-2.5" role="group" aria-label="Filtrar proyectos" id="chips">
+    <button type="button" class="chip glass rounded-full px-4 py-2 font-mono text-xs tracking-wider text-slate-200" data-f="all" aria-pressed="true">Todos</button>
+    <button type="button" class="chip glass rounded-full px-4 py-2 font-mono text-xs tracking-wider text-slate-200" data-f="ads" aria-pressed="false">Ad creative</button>
+    <button type="button" class="chip glass rounded-full px-4 py-2 font-mono text-xs tracking-wider text-slate-200" data-f="gaming" aria-pressed="false">Gaming</button>
+    <button type="button" class="chip glass rounded-full px-4 py-2 font-mono text-xs tracking-wider text-slate-200" data-f="motion" aria-pressed="false">Motion graphics</button>
+  </div>
+  <div id="pgrid" class="mt-8"></div>
+  <noscript><p class="text-slate-400 mt-6">Activá JavaScript para ver los videos del portfolio.</p></noscript>
+  <p class="mt-8 text-center font-mono text-xs text-slate-500">Pasá el cursor para una vista previa · clic para verlo completo</p>
+
+  <div class="mt-14 grid lg:grid-cols-3 gap-6">
+    <div class="reveal glass corner-dots rounded-3xl p-8 glow-border">
+      <p class="text-slate-300 leading-relaxed">
+        Edito para redes sociales: <strong class="text-white">reels, noticias gaming, anuncios y animación de texto</strong>.
+        Uso <strong class="text-ice">Adobe Premiere Pro</strong> para el montaje y
+        <strong class="text-ice">After Effects</strong> para animación, <strong class="text-white">rotoscopia y 3D</strong>, y sigo practicando con proyectos propios.
+      </p>
+    </div>
+    <div class="reveal glass corner-dots rounded-3xl p-7 glow-border" style="transition-delay:.1s">
+      <div class="flex items-center gap-4">
+        <span data-ico="ae" data-size="48"></span>
+        <div><h3 class="font-display font-semibold text-white text-lg">After Effects</h3><span class="font-mono text-xs text-slate-400">Motion graphics, rotoscopia y 3D</span></div>
+      </div>
+      <p class="text-slate-400 text-sm mt-4 leading-relaxed">Animación de texto, rotoscopia, composición de capas y elementos 3D, con render hasta 4K.</p>
+    </div>
+    <div class="reveal glass corner-dots rounded-3xl p-7 glow-border" style="transition-delay:.2s">
+      <div class="flex items-center gap-4">
+        <span data-ico="pr" data-size="48"></span>
+        <div><h3 class="font-display font-semibold text-white text-lg">Premiere Pro</h3><span class="font-mono text-xs text-slate-400">Montaje y edición</span></div>
+      </div>
+      <p class="text-slate-400 text-sm mt-4 leading-relaxed">Cortes, ritmo, audio y exportación de reels, noticias y videos promocionales.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOOKS -->
+<section id="hooks" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
+  <div class="reveal">
+    <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">04 / Especialidad</span>
+    <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Diseño de <span class="gradient-text">hooks</span></h2>
+    <p class="text-slate-400 mt-4 max-w-2xl leading-relaxed">El hook decide si el video se ve o se saltea. Trabajo la apertura de los primeros segundos como una pieza en sí misma: promesa clara, texto legible desde el primer fotograma e interrupción de patrón. Tocá cada etapa para saltar a ese momento del anuncio.</p>
+  </div>
+  <div class="mt-12 grid lg:grid-cols-5 gap-8 items-center">
+    <div class="reveal lg:col-span-2 flex justify-center">
+      <div class="vid-wrap w-full" style="max-width:300px">
+        <button type="button" id="hook-open" class="vid-card relative block w-full aspect-[9/16] rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-violet-500/10" aria-label="Reproducir el anuncio desde el hook">
+          <img src="miniatura-shilajit.jpg" alt="Primer fotograma del anuncio: el hook" width="720" height="1280" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover">
+          <span class="absolute inset-0 block bg-gradient-to-t from-slate-950/80 via-transparent to-slate-950/30"></span>
+          <span class="absolute top-4 left-4 glass rounded-full px-2.5 py-1 font-mono text-[10px] tracking-widest text-white/90">0:00 · HOOK</span>
+          <span class="vid-play absolute inset-0 m-auto w-16 h-16 rounded-full glass-strong flex items-center justify-center shadow-[0_0_40px_rgba(168,85,247,0.55)]"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" class="ml-1"><path d="M8 5v14l11-7z"/></svg></span>
+        </button>
+      </div>
+    </div>
+    <ol class="reveal lg:col-span-3 space-y-2" style="transition-delay:.1s" id="steps"></ol>
+  </div>
+  <div class="mt-12 grid md:grid-cols-3 gap-5" id="hook-cards"></div>
+</section>
+
+<!-- CROMITO -->
+<section id="cromito" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
+  <div class="reveal flex flex-col sm:flex-row sm:items-end sm:justify-between gap-4">
+    <div>
+      <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">05 / Caso de estudio</span>
+      <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Cromito — <span class="gradient-text">E-commerce &amp; Social Media</span></h2>
+    </div>
+    <span class="font-mono text-xs text-slate-400 glass rounded-full px-4 py-2 self-start sm:self-auto">Febrero 2026 – Actualidad</span>
+  </div>
+  <div class="reveal mt-10 glass-strong corner-dots rounded-3xl p-8 sm:p-10 relative overflow-hidden">
+    <div class="orb w-64 h-64 bg-violet-600/25 -top-20 -right-20"></div>
+    <div class="relative flex flex-col md:flex-row md:items-center gap-6 md:gap-12">
+      <div class="shrink-0">
+        <div class="font-display font-bold text-5xl sm:text-6xl gradient-text leading-none"><span data-count="78">78</span>+</div>
+        <div class="font-mono text-xs text-slate-400 tracking-wider uppercase mt-2">Ventas concretadas</div>
+      </div>
+      <div class="hidden md:block" style="background:linear-gradient(180deg,transparent,rgba(196,181,253,0.3),transparent);width:1px;height:64px;"></div>
+      <p class="text-slate-300 leading-relaxed">
+        Emprendimiento propio de <strong class="text-white">comercio electrónico de accesorios e indumentaria</strong>,
+        gestionado de punta a punta: desde la publicación del catálogo hasta el despacho de cada pedido.
+        Más de <strong class="text-ice">78 ventas concretadas</strong> desde el inicio del emprendimiento.
+      </p>
+    </div>
+  </div>
+  <div class="reveal mt-6 rounded-3xl p-[1px] bg-gradient-to-r from-electric/60 via-ice/30 to-electric/60" style="transition-delay:.1s">
+    <div class="rounded-3xl bg-ink/90 p-8 flex flex-col md:flex-row md:items-center justify-between gap-6">
+      <div class="flex items-start gap-5">
+        <div class="shrink-0 w-14 h-14 rounded-2xl glass flex items-center justify-center">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#c4b5fd" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l1.5-5h15L21 9M3 9v11a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9M3 9h18M9 21v-7h6v7"/></svg>
+        </div>
+        <div>
+          <span class="font-mono text-[11px] text-electric tracking-[0.2em] uppercase">Tienda oficial · Tiendanube</span>
+          <h3 class="font-display font-semibold text-white text-xl mt-1.5">cromito.mitiendanube.com</h3>
+          <p class="text-slate-400 text-sm mt-1.5 leading-relaxed">Catálogo optimizado, secciones de encargo y stock local, pasarelas de pago y diseño personalizado.</p>
+        </div>
+      </div>
+      <a href="https://cromito.mitiendanube.com" target="_blank" rel="noopener noreferrer" class="magnet cta-primary shrink-0 text-white font-semibold px-7 py-3.5 rounded-2xl inline-flex items-center justify-center gap-2">
+        Visitar tienda
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>
+      </a>
+    </div>
+  </div>
+  <div class="mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-5" id="cromito-cards"></div>
+</section>
+
+<!-- REELS -->
+<section id="reels" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
+  <div class="reveal">
+    <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">06 / Portfolio audiovisual</span>
+    <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Reels de <span class="gradient-text">Instagram</span></h2>
+    <p class="text-slate-400 mt-4 max-w-2xl leading-relaxed">Muestra de edición de video: piezas publicadas en el canal oficial de la marca
+      <a href="https://instagram.com/cromito.ar" target="_blank" rel="noopener noreferrer" class="text-ice hover:text-white font-medium transition-colors">@cromito.ar</a>.
+      Tocá cada video para verlo en Instagram.</p>
+  </div>
+  <div class="mt-12 grid sm:grid-cols-2 lg:grid-cols-3 gap-6" id="reels-grid"></div>
+</section>
+
+<!-- COMPETENCIAS -->
+<section id="competencias" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
+  <div class="reveal">
+    <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">07 / Habilidades</span>
+    <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Competencias</h2>
+  </div>
+  <div class="mt-10 grid md:grid-cols-2 gap-6" id="skills"></div>
+</section>
+
+<!-- CERTIFICACIONES -->
+<section id="certificaciones" class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
+  <div class="reveal">
+    <span class="font-mono text-xs text-electric tracking-[0.25em] uppercase">08 / Formación continua</span>
+    <h2 class="font-display font-bold text-white text-3xl sm:text-5xl mt-3 tracking-tight">Cursos y <span class="gradient-text">Certificaciones</span></h2>
+  </div>
+  <div class="mt-10 space-y-4" id="certs"></div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="relative max-w-6xl mx-auto px-5 sm:px-8 py-24">
+  <div class="reveal glass-strong corner-dots rounded-[2rem] p-10 sm:p-16 text-center relative overflow-hidden">
+    <div class="spotlight top-[-60%] left-1/2 -translate-x-1/2 !w-[80vmax] !h-[80vmax]"></div>
+    <div class="relative">
+      <h2 class="font-display font-bold text-white text-3xl sm:text-5xl tracking-tight">¿Buscás talento <span class="gradient-text">junior</span>?</h2>
+      <p class="text-slate-400 mt-5 max-w-xl mx-auto leading-relaxed">Estoy disponible para posiciones junior en marketing digital, e-commerce, ad creative o como editor de video. Escribime y conversemos sobre cómo puedo aportar a tu proyecto.</p>
+      <div class="mt-9 flex flex-wrap justify-center gap-4">
+        <a href="mailto:rodriguezagustin3241@gmail.com" class="magnet cta-primary text-white font-semibold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>
+          Enviar Email
+        </a>
+        <a href="tel:+541164900202" class="magnet glass text-white font-semibold px-8 py-4 rounded-2xl inline-flex items-center gap-2.5 hover:bg-white/10 transition-colors duration-300">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.12.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.6 2.81.72A2 2 0 0 1 22 16.92z"/></svg>
+          11 6490-0202
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="border-t border-white/5 mt-8">
+  <div class="gradient-line"></div>
+  <div class="max-w-6xl mx-auto px-5 sm:px-8 py-12">
+    <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+      <div class="text-center md:text-left">
+        <div class="font-display font-bold text-white text-lg flex items-center justify-center md:justify-start gap-2.5">
+          <span class="w-2.5 h-2.5 rounded-full bg-electric shadow-[0_0_12px_rgba(168,85,247,0.95)]"></span>
+          Agustín Nahuel Rodríguez
+        </div>
+        <p class="font-mono text-xs text-slate-500 mt-2">Lanús / Valentín Alsina, Buenos Aires · 11 6490-0202</p>
+      </div>
+      <div class="flex flex-wrap justify-center gap-3" id="foot-links"></div>
+    </div>
+    <div class="gradient-line mt-10 mb-6"></div>
+    <p class="text-center font-mono text-xs text-slate-600">© 2026 Agustín Nahuel Rodríguez · Edición de Video · Ad Creative · Marketing Digital · E-commerce</p>
+  </div>
+</footer>
+
+<dialog id="vm" aria-label="Reproductor de video">
+  <div class="relative glass-strong rounded-3xl p-3 sm:p-4">
+    <button type="button" id="vx" class="absolute -top-3 -right-3 z-10 w-10 h-10 rounded-full glass-strong text-white flex items-center justify-center hover:bg-white/10 transition-colors" aria-label="Cerrar video">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+    </button>
+    <video id="vf" controls playsinline preload="none" class="block rounded-2xl bg-black object-contain" style="aspect-ratio:9/16;width:min(88vw,45vh)"></video>
+    <p id="vt" class="text-slate-300 text-sm mt-3 px-1 max-w-[88vw]"></p>
+  </div>
+</dialog>
+
+<script>
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const fine = matchMedia('(hover:hover) and (pointer:fine)').matches;
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+
+/* ---------- Iconos y helpers ---------- */
+const badge = (t, c, s = 28) => `<svg width="${s}" height="${s}" viewBox="0 0 48 48" class="shrink-0" role="img" aria-label="${t === 'Ae' ? 'After Effects' : 'Premiere Pro'}"><rect x="1" y="1" width="46" height="46" rx="11" fill="#00005b" stroke="${c}" stroke-opacity=".6" stroke-width="2"/><text x="24" y="31" text-anchor="middle" font-family="Space Grotesk,Inter,sans-serif" font-weight="700" font-size="21" fill="${c}">${t}</text></svg>`;
+const ICO = { ae: s => badge('Ae', '#9999ff', s), pr: s => badge('Pr', '#ea77ff', s) };
+const AE = ICO.ae(28), PR = ICO.pr(28);
+$$('[data-ico]').forEach(el => { el.innerHTML = el.dataset.ico.split(',').map(k => ICO[k](+el.dataset.size)).join(''); });
+const svg = (d, s = 20, c = '#a78bfa', w = 1.8) => `<svg width="${s}" height="${s}" viewBox="0 0 24 24" fill="none" stroke="${c}" stroke-width="${w}" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+const ARROW = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7M8 7h9v9"/></svg>';
+const CHECK = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+const d = i => `transition-delay:${(i % 3) * .08}s`;
+const tile = p => `<div class="w-11 h-11 rounded-xl bg-electric/15 border border-electric/25 flex items-center justify-center mb-4">${svg(p)}</div>`;
+
+/* ---------- Datos ---------- */
+const NAV = [['sobre-mi', 'SOBRE MÍ'], ['experiencia', 'EXPERIENCIA'], ['edicion', 'PROYECTOS'], ['hooks', 'HOOKS'], ['cromito', 'CROMITO'], ['competencias', 'SKILLS'], ['certificaciones', 'CERTIFICACIONES']];
+
+const EXP = [
+  { k: 'Freelance · Remoto', t: 'Ad Research &amp; Ad Creative', when: 'Actualidad', live: 1,
+    li: [['Ad research:', 'relevamiento y curaduría de anuncios en circulación dentro del nicho del cliente, identificando los que muestran señales de performance sostenida.'],
+         ['Análisis de creativos:', 'desglose de hook, ángulo de venta, estructura narrativa, formato y CTA para entender qué funciona, qué no y por qué.'],
+         ['Ad creative (remixing):', 'producción de variantes sobre conceptos validados (nuevos hooks, reordenamiento de estructura, ritmo y copy) para iteración y testeo creativo.']],
+    tags: ['Creative strategy', 'Competitive research', 'Creative testing', 'Hooks'] },
+  { k: 'Rocos Gaming · Canal de gaming, México', t: 'Creador de contenido gaming y editor de video', when: 'Actualidad', live: 1,
+    li: [['', 'Integro un equipo de <strong class="text-white">3 editores</strong> y soy responsable de las <strong class="text-white">noticias y el contenido de Fortnite</strong> del canal.'],
+         ['', 'Edición de formato corto con gameplay, subtitulado dinámico palabra por palabra y aperturas diseñadas para retención.']],
+    tags: ['Fortnite', 'Gaming news', 'Short-form'] },
+  { k: 'Emprendimiento propio · E-commerce', t: 'Fundador de Cromito', when: 'Feb 2026 – Actualidad',
+    p: 'Gestión integral de una tienda de accesorios e indumentaria en Tiendanube: catálogo, contenido para Instagram, atención, cierre de ventas y logística. <strong class="text-ice">78+ ventas concretadas.</strong> <a href="#cromito" class="text-white underline decoration-electric underline-offset-4 hover:text-ice">Ver caso de estudio</a>' }
+];
+
+const PROJECTS = [
+  { src: 'shilajit-ad.mp4', poster: 'miniatura-shilajit.jpg', ratio: '9/16', cat: 'ads', dur: '0:26', icon: PR, label: 'Ad creative',
+    title: 'Anuncio de Shilajit', short: 'Ad creative con hook en el primer fotograma, estructura problema → producto → beneficios → CTA.',
+    desc: 'Anuncio vertical para un suplemento de Shilajit: hook en el fotograma 0, pregunta de identificación, producto, escenas de beneficio y CTA final.',
+    tags: ['Ad creative', 'Hook', 'CTA'], isNew: true },
+  { src: 'fortnite-noticia.mp4', poster: 'miniatura-fortnite.jpg', ratio: '9/16', cat: 'gaming', dur: '1:10', icon: PR, label: 'Gaming',
+    title: 'Noticia de Fortnite', short: 'Contenido de noticias para Rocos Gaming con gameplay y subtítulos dinámicos palabra por palabra.',
+    desc: 'Video de noticias de Fortnite para Rocos Gaming: gameplay, subtitulado dinámico palabra por palabra y ritmo pensado para retención.',
+    tags: ['Fortnite', 'Rocos Gaming', 'Subtítulos'], isNew: true },
+  { src: 'modulo-5.mp4', poster: 'miniatura-modulo-5.jpg', ratio: '16/9', cat: 'motion', dur: '0:07', icon: AE, label: 'After Effects', badge: '4K',
+    title: 'Módulo 5: rotoscopia y 3D', short: 'Proyecto con rotoscopia y elementos 3D, exportado en 4K.',
+    desc: 'Proyecto del Módulo 5 con rotoscopia y 3D en After Effects, renderizado en 4K.', tags: ['Rotoscopia', '3D', 'Render 4K'] },
+  { src: 'at-home-personal-care.mp4', poster: 'miniatura-at-home.jpg', ratio: '9/16', cat: 'motion', dur: '0:20', icon: AE, label: 'After Effects',
+    title: 'At Home Personal Care', short: 'Video de práctica creado por mí.', desc: 'Video de práctica para At Home Personal Care, creado por mí.', tags: [] },
+  { src: 'after-effects-practica.mp4', poster: 'miniatura-after-effects.jpg', ratio: '9/16', cat: 'motion', dur: '0:12', icon: AE, label: 'After Effects',
+    title: 'Práctica de After Effects', short: 'Video de práctica de After Effects creado por mí.', desc: 'Video de práctica de After Effects creado por mí.', tags: [] },
+  { src: 'video-practica-2.mp4', poster: 'miniatura-video-2.jpg', ratio: '9/16', cat: 'motion', dur: '0:10', icon: '', label: 'Motion graphics',
+    title: 'Práctica de motion graphics', short: 'Video de práctica creado por mí.', desc: 'Video de práctica creado por mí.', tags: [] }
+];
+
+const HOOK_STEPS = [
+  { t: 0, ts: '0:00', name: 'Hook', txt: 'Promesa visual y texto en pantalla desde el fotograma 0: «Esto se extrae de las rocas del Himalaya».' },
+  { t: 4, ts: '0:04', name: 'Problema', txt: 'Pregunta de identificación con barra de energía animada que genera tensión.' },
+  { t: 8, ts: '0:08', name: 'Producto', txt: 'Presentación del producto en escena, con los elementos que lo contextualizan.' },
+  { t: 12, ts: '0:12', name: 'Beneficio en uso', txt: 'Escenas de entrenamiento y familia que muestran el resultado y no solo lo describen.' },
+  { t: 24, ts: '0:24', name: 'Llamado a la acción', txt: 'CTA directo con indicador visual hacia el botón de compra.' }
+];
+const HOOK_CARDS = [
+  ['Promesa en el primer segundo', 'Texto en pantalla y elemento visual fuerte desde el fotograma 0, sin intros ni relleno.'],
+  ['Interrupción de patrón', 'Cortes, zooms, movimiento y cambios de plano que rompen el scroll y mantienen el ritmo.'],
+  ['Loop de curiosidad', 'Abro una pregunta en el hook y la cierro más adelante, para sostener la atención hasta el CTA.']
+];
+
+const CROMITO = [
+  ['<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>', 'Gestión de Tienda Online', 'Administración de tienda en Tiendanube y actualización constante del catálogo.'],
+  ['<path d="m22 8-6 4 6 4V8Z"/><rect x="2" y="6" width="14" height="12" rx="2"/>', 'Contenido Audiovisual', 'Creación y edición de reels, videos promocionales y posteos para Instagram.'],
+  ['<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>', 'Atención y Conversión', 'Atención de consultas, cierre de ventas directas y seguimiento postventa de clientes.'],
+  ['<path d="M21 8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16Z"/><path d="m3.3 7 8.7 5 8.7-5M12 22V12"/>', 'Logística y Envíos', 'Organización de promociones, preparación de pedidos y coordinación de despachos.']
+];
+
+const REELS = [
+  { url: 'https://www.instagram.com/cromito.ar/reel/DdXBT1oJYH1/', n: 1, txt: 'Edición y optimización de contenido dinámico.', bg: 'from-ink2 via-ink to-slate-950', glow: 'circle at 30% 25%, rgba(139,92,246,0.55), transparent 45%),radial-gradient(circle at 75% 70%, rgba(234,119,255,0.35), transparent 45%' },
+  { url: 'https://www.instagram.com/cromito.ar/reel/DeN7JBYOwAI/', n: 2, txt: 'Pieza audiovisual enfocada en captar atención.', bg: 'from-slate-950 via-ink to-ink2', glow: 'circle at 70% 20%, rgba(139,92,246,0.55), transparent 45%),radial-gradient(circle at 25% 75%, rgba(153,153,255,0.4), transparent 45%' }
+];
+
+const SKILLS = [
+  ['<path d="m13 2-9 12h7l-1 8 9-12h-7z"/>', 'Creative &amp; Performance', [
+    ['Diseño de hooks para short-form', '(retención en los primeros segundos)'], ['Ad research', '(relevamiento de anuncios ganadores en un nicho)'],
+    ['Análisis de creativos', '(hook, ángulo, estructura y CTA)'], ['Ad creative', '(remixing e iteración de variantes para testeo)'],
+    ['Creación de contenido gaming', '(noticias y contenido de Fortnite)'], ['Storytelling para marketing digital']]],
+  ['<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8m-4-4v4"/>', 'Digitales y Contenido', [
+    ['Adobe Premiere Pro', '(Montaje y edición)'], ['Adobe After Effects', '(Animación, rotoscopia y 3D)'], ['CapCut &amp; Filmora', '(Edición de video)'],
+    ['Tiendanube', '(Catálogo y gestión)'], ['Instagram', '(Estrategia y publicaciones)'], ['Herramientas de Inteligencia Artificial']]],
+  ['<path d="M3 3v18h18"/><path d="m19 9-5 5-4-4-4 4"/>', 'Comerciales', [
+    ['Atención al cliente'], ['Ventas y seguimiento de consultas'], ['Organización de promociones y pedidos']]],
+  ['<path d="m16 18 6-6-6-6M8 6l-6 6 6 6"/>', 'Técnicas e Informática', [
+    ['Armado y mantenimiento básico de PC'], ['C++, C# y HTML', '(En formación)'], ['Cortadora láser e impresoras 3D']]]
+];
+
+const CERTS = [
+  { l: 'G', t: 'Domina la IA con Gemini', d: 'Google Skillshop · Certificado de formación en inteligencia artificial con Gemini.', url: 'https://skillshop.exceedlms.com/student/award/phesB7casMt3ZNWrkDXeCSxz', white: true },
+  { l: 'A', t: 'Posproducción de Vídeos', h: '(17.8h)', d: 'Accenture / Fundación Accenture · Finalizado el 17/10/2026' },
+  { l: 'H', t: 'Certificado en Marketing Digital', d: 'HubSpot Academy · Vigente del 17/10/2026 al 15/11/2028', url: 'https://app.hubspot.com/academy/achievements/0bdbylch/es/1/agustin-nahuel-rodriguez/certificado-en-marketing-digital' },
+  { l: 'H', t: 'Certificado en Marketing en Redes Sociales', d: 'HubSpot Academy · Vigente del 24/09/2026 al 23/10/2028', url: 'https://app.hubspot.com/academy/achievements/kggs51qf/es/1/agustin-nahuel-rodriguez/certificado-en-marketing-en-redes-sociales' },
+  { l: 'S', t: 'Ecommerce para pymes: vende más online', h: '(6h)', d: 'Santander Open Academy / IE University · Finalizado el 19/09/2026' },
+  { l: 'S', t: 'Storytelling en el Marketing Digital', h: '(8h)', d: 'Santander Open Academy / Univ. of Chicago · Finalizado el 10/09/2026' }
+];
+
+/* ---------- Render ---------- */
+$('#nav-d').innerHTML = NAV.map(([h, t]) => `<a href="#${h}" class="nav-link text-slate-300 hover:text-white transition-colors">${t}</a>`).join('');
+$('#mobile-menu').innerHTML = NAV.map(([h, t]) => `<a href="#${h}" class="block text-slate-300 hover:text-white">${t}</a>`).join('') + '<a href="mailto:rodriguezagustin3241@gmail.com" class="block text-ice font-semibold">Contactar →</a>';
+
+$('#marquee').innerHTML = [0, 1].map(i => `<span class="flex gap-12 shrink-0" ${i ? 'aria-hidden="true"' : ''}>` +
+  ['Hooks', 'Ad Research', 'Ad Creative', 'Contenido Gaming', 'Fortnite', 'Marketing Digital', 'E-commerce', 'Edición de Video', 'After Effects', 'Premiere Pro', 'Storytelling']
+    .map(w => `<span>${w}</span><span class="text-electric">✦</span>`).join('') + '</span>').join('');
+
+$('#exp').innerHTML = EXP.map((e, i) => `<article class="reveal glass corner-dots rounded-3xl p-7 sm:p-8 glow-border relative" style="transition-delay:${i * .08}s">
+  <span class="tl-dot"></span>
+  <div class="flex flex-wrap items-start justify-between gap-3">
+    <div><span class="font-mono text-[11px] text-electric tracking-[0.2em] uppercase">${e.k}</span><h3 class="font-display font-semibold text-white text-xl sm:text-2xl mt-1.5">${e.t}</h3></div>
+    <span class="font-mono text-xs ${e.live ? 'text-emerald-300' : 'text-slate-300'} glass rounded-full px-3 py-1.5">${e.when}</span>
+  </div>
+  ${e.p ? `<p class="mt-5 text-sm sm:text-[15px] text-slate-300 leading-relaxed">${e.p}</p>` : `<ul class="mt-5 space-y-3 text-sm sm:text-[15px] text-slate-300 leading-relaxed">${e.li.map(([b, t]) => `<li class="flex gap-3"><span class="mt-2 w-1.5 h-1.5 rounded-full bg-electric shrink-0"></span><span>${b ? `<strong class="text-white">${b}</strong> ` : ''}${t}</span></li>`).join('')}</ul>
+  <div class="mt-5 flex flex-wrap gap-2">${e.tags.map(t => `<span class="glass rounded-full px-3 py-1 font-mono text-[10px] tracking-widest text-ice uppercase">${t}</span>`).join('')}</div>`}
+</article>`).join('');
+
+$('#pgrid').innerHTML = PROJECTS.map((p, i) => {
+  const wide = p.ratio === '16/9';
+  return `<div class="reveal vid-wrap pitem ${wide ? 'pw' : ''}" data-cat="${p.cat}" style="${d(i)}">
+    <button type="button" class="vid-card relative block w-full ${wide ? 'aspect-video' : 'aspect-[9/16]'} rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-violet-500/10 text-left" data-i="${i}" aria-label="Reproducir video: ${p.title}">
+      <img src="${p.poster}" alt="Miniatura del video: ${p.title}" width="${wide ? 1280 : 720}" height="${wide ? 720 : 1280}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover">
+      <video class="vid-prev absolute inset-0 w-full h-full object-cover" muted loop playsinline preload="none" tabindex="-1" aria-hidden="true"></video>
+      <span class="absolute inset-0 block bg-gradient-to-t from-slate-950/95 via-slate-950/5 to-slate-950/40"></span>
+      <span class="scanline"></span>
+      <span class="absolute top-4 left-4 right-4 flex items-center justify-between">
+        <span class="flex items-center gap-2">${p.icon}<span class="font-mono text-[10px] tracking-widest text-ice/90 uppercase">${p.label}</span></span>
+        <span class="flex items-center gap-2">
+          ${p.isNew ? '<span class="rounded-full px-2.5 py-1 font-mono text-[10px] tracking-widest font-semibold text-white bg-gradient-to-r from-violet-600 to-fuchsia-500">NUEVO</span>' : ''}
+          ${p.badge ? `<span class="rounded-full px-2.5 py-1 font-mono text-[10px] tracking-widest font-semibold text-white bg-gradient-to-r from-violet-600 to-fuchsia-500">${p.badge}</span>` : ''}
+          <span class="glass rounded-full px-2.5 py-1 font-mono text-[10px] tracking-widest text-white/80">${p.dur}</span>
+        </span>
+      </span>
+      <span class="vid-play absolute inset-0 m-auto w-16 h-16 rounded-full glass-strong flex items-center justify-center shadow-[0_0_40px_rgba(168,85,247,0.55)]"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" class="ml-1"><path d="M8 5v14l11-7z"/></svg></span>
+      <span class="vid-bar"></span>
+      <span class="absolute bottom-0 inset-x-0 block p-5 pb-6">
+        ${p.tags.length ? `<span class="flex flex-wrap gap-2 mb-2">${p.tags.map(t => `<span class="glass rounded-full px-2.5 py-0.5 font-mono text-[10px] tracking-widest text-ice uppercase">${t}</span>`).join('')}</span>` : ''}
+        <span class="block font-display font-semibold text-white">${p.title}</span>
+        <span class="block text-slate-300 text-xs mt-1 leading-relaxed">${p.short}</span>
+      </span>
+    </button></div>`;
+}).join('');
+
+$('#steps').innerHTML = HOOK_STEPS.map(s => `<li><button type="button" class="step w-full text-left flex items-start gap-4 rounded-2xl p-4" data-t="${s.t}">
+  <span class="ts shrink-0 glass rounded-full px-3 py-1.5 font-mono text-xs text-ice">${s.ts}</span>
+  <span><span class="block font-display font-semibold text-white">${s.name}</span><span class="block text-slate-400 text-sm mt-1 leading-relaxed">${s.txt}</span></span></button></li>`).join('');
+
+$('#hook-cards').innerHTML = HOOK_CARDS.map(([t, x], i) => `<div class="reveal glass corner-dots rounded-3xl p-6 glow-border" style="${d(i)}"><h4 class="font-display font-semibold text-white">${t}</h4><p class="text-slate-400 text-sm mt-2 leading-relaxed">${x}</p></div>`).join('');
+
+$('#cromito-cards').innerHTML = CROMITO.map(([p, t, x], i) => `<div class="reveal glass corner-dots rounded-3xl p-6 glow-border" style="transition-delay:${i * .08}s">${tile(p)}<h4 class="font-display font-semibold text-white">${t}</h4><p class="text-slate-400 text-sm mt-2 leading-relaxed">${x}</p></div>`).join('');
+
+$('#reels-grid').innerHTML = REELS.map((r, i) => `<a href="${r.url}" target="_blank" rel="noopener noreferrer" class="reel-card vid-wrap group reveal block" style="transition-delay:${i * .12}s">
+  <div class="reel-visual relative aspect-[9/16] max-h-[420px] w-full mx-auto rounded-3xl overflow-hidden border border-white/10 shadow-2xl shadow-violet-500/10 transition-shadow duration-500" style="max-width:280px;">
+    <div class="absolute inset-0 bg-gradient-to-b ${r.bg}"></div>
+    <div class="absolute inset-0 opacity-40" style="background-image:radial-gradient(${r.glow});"></div>
+    <div class="scanline"></div>
+    <div class="absolute top-4 left-4 right-4 flex items-center justify-between">
+      <span class="font-mono text-[10px] tracking-widest text-ice/80 uppercase">@cromito.ar</span>
+      <span class="glass rounded-full px-2.5 py-1 font-mono text-[9px] tracking-widest text-white/80 uppercase">Reel</span>
+    </div>
+    <div class="play-btn absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 rounded-full glass-strong flex items-center justify-center transition-all duration-500 shadow-[0_0_40px_rgba(168,85,247,0.55)]"><svg width="22" height="22" viewBox="0 0 24 24" fill="#fff" class="ml-1"><path d="M8 5v14l11-7z"/></svg></div>
+    <div class="absolute bottom-0 inset-x-0 p-5 bg-gradient-to-t from-slate-950/95 to-transparent">
+      <h4 class="font-display font-semibold text-white">Reel #${r.n} — Cromito</h4><p class="text-slate-400 text-xs mt-1">${r.txt}</p>
+    </div>
+  </div>
+  <div class="mt-4 flex items-center justify-center gap-2 font-mono text-xs text-slate-400 group-hover:text-ice transition-colors">Ver en Instagram ${ARROW}</div>
+</a>`).join('') + `<div class="reveal flex" style="transition-delay:.24s">
+  <a href="https://instagram.com/cromito.ar" target="_blank" rel="noopener noreferrer" class="glass corner-dots rounded-3xl p-8 flex flex-col justify-between w-full glow-border group">
+    <div class="w-12 h-12 rounded-2xl bg-electric/15 border border-electric/25 flex items-center justify-center">${svg('<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>', 22)}</div>
+    <div class="mt-8">
+      <h4 class="font-display font-semibold text-white text-xl">¿Querés ver más?</h4>
+      <p class="text-slate-400 text-sm mt-2 leading-relaxed">Todo el contenido de la marca se publica y difunde en el Instagram oficial.</p>
+      <span class="mt-5 inline-flex items-center gap-2 text-ice font-medium text-sm group-hover:gap-3.5 transition-all duration-300">Seguir @cromito.ar ${svg('<path d="M5 12h14m-7-7 7 7-7 7"/>', 15, 'currentColor', 2)}</span>
+    </div>
+  </a></div>`;
+
+$('#skills').innerHTML = SKILLS.map(([p, t, items], i) => `<div class="reveal glass corner-dots rounded-3xl p-8 glow-border" style="transition-delay:${(i % 2) * .1}s">
+  <div class="flex items-center gap-4 mb-6"><div class="w-12 h-12 rounded-2xl bg-electric/15 border border-electric/25 flex items-center justify-center">${svg(p, 22)}</div><h3 class="font-display font-semibold text-white text-lg">${t}</h3></div>
+  <ul class="space-y-3.5 text-sm">${items.map(([a, b]) => `<li class="flex items-start gap-3"><span class="mt-1.5 w-1.5 h-1.5 rounded-full bg-electric shrink-0"></span><span class="text-slate-300">${a}${b ? ` <span class="text-slate-500">${b}</span>` : ''}</span></li>`).join('')}</ul></div>`).join('');
+
+$('#certs').innerHTML = CERTS.map((c, i) => `<div class="reveal glass corner-dots rounded-3xl p-6 sm:p-7 glow-border flex flex-col sm:flex-row sm:items-center justify-between gap-4" style="${d(i)}">
+  <div class="flex items-start gap-5">
+    <div class="shrink-0 w-12 h-12 rounded-2xl ${c.white ? 'bg-white/10 border border-white/15 text-white' : 'bg-electric/15 border border-electric/25 text-ice'} flex items-center justify-center font-display font-bold text-lg">${c.l}</div>
+    <div><h4 class="font-display font-semibold text-white text-lg">${c.t}${c.h ? ` <span class="text-slate-400 font-normal text-sm">${c.h}</span>` : ''}</h4><p class="text-slate-400 text-sm mt-1">${c.d}</p></div>
+  </div>
+  ${c.url ? `<a href="${c.url}" target="_blank" rel="noopener noreferrer" class="magnet shrink-0 self-start sm:self-center inline-flex items-center gap-2 cta-primary text-white font-semibold text-sm px-5 py-2.5 rounded-xl">Ver certificado ${ARROW}</a>`
+          : `<span class="shrink-0 self-start sm:self-center inline-flex items-center gap-2 glass rounded-full px-4 py-2 font-mono text-xs text-emerald-300">${CHECK} Completado</span>`}
+</div>`).join('');
+
+const FL = 'glass rounded-full px-5 py-2.5 text-sm text-slate-300 hover:text-white hover:bg-white/10 transition-all duration-300 flex items-center gap-2';
+$('#foot-links').innerHTML =
+  `<a href="mailto:rodriguezagustin3241@gmail.com" class="${FL}">${svg('<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/>', 14, '#a78bfa', 2)}Email</a>` +
+  `<a href="https://cromito.mitiendanube.com" target="_blank" rel="noopener noreferrer" class="${FL}">${svg(CROMITO[0][0], 14, '#a78bfa', 2)}Tiendanube</a>` +
+  `<a href="https://instagram.com/cromito.ar" target="_blank" rel="noopener noreferrer" class="${FL}">${svg('<rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>', 14, '#a78bfa', 2)}@cromito.ar</a>`;
+
+/* ---------- Scroll reveal (agrega .done al terminar) ---------- */
+const io = 'IntersectionObserver' in window ? new IntersectionObserver(es => es.forEach(e => {
+  if (!e.isIntersecting) return;
+  const el = e.target;
+  el.classList.add('visible');
+  el.addEventListener('transitionend', ev => { if (ev.target !== el) return; el.style.transitionDelay = '0s'; el.classList.add('done'); }, { once: true });
+  io.unobserve(el);
+}), { threshold: 0.12, rootMargin: '0px 0px -40px 0px' }) : null;
+$$('.reveal').forEach(el => io ? io.observe(el) : el.classList.add('visible'));
+
+/* ---------- Menú móvil ---------- */
+const menuBtn = $('#menu-btn'), mobileMenu = $('#mobile-menu'), menuIcon = $('#menu-icon');
+const setMenu = o => { mobileMenu.classList.toggle('hidden', !o); menuBtn.setAttribute('aria-expanded', o); menuIcon.setAttribute('d', o ? 'M6 6l12 12M18 6L6 18' : 'M4 7h16M4 12h16M4 17h16'); };
+menuBtn.addEventListener('click', () => setMenu(mobileMenu.classList.contains('hidden')));
+$$('a', mobileMenu).forEach(a => a.addEventListener('click', () => setMenu(false)));
+
+/* ---------- Progreso de scroll (1 vez por frame) + link activo con IntersectionObserver ---------- */
+const prog = $('#prog'), links = $$('.nav-link');
+let ticking = false;
+const onScroll = () => {
+  if (ticking) return; ticking = true;
+  requestAnimationFrame(() => {
+    const h = document.documentElement;
+    prog.style.transform = `scaleX(${h.scrollTop / (h.scrollHeight - h.clientHeight || 1)})`;
+    ticking = false;
+  });
+};
+addEventListener('scroll', onScroll, { passive: true }); onScroll();
+if ('IntersectionObserver' in window) {
+  const secIO = new IntersectionObserver(es => es.forEach(e => {
+    if (e.isIntersecting) links.forEach(l => l.classList.toggle('active', l.getAttribute('href') === '#' + e.target.id));
+  }), { rootMargin: '-40% 0px -55% 0px' });
+  links.forEach(l => { const s = $(l.getAttribute('href')); if (s) secIO.observe(s); });
+}
+
+/* ---------- Luz del cursor (el loop se detiene al llegar) ---------- */
+if (fine && !reduce) {
+  const cur = $('#cur'); let tx = 0, ty = 0, x = 0, y = 0, running = false;
+  const loop = () => {
+    x += (tx - x) * .12; y += (ty - y) * .12;
+    cur.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+    if (Math.abs(tx - x) > .5 || Math.abs(ty - y) > .5) requestAnimationFrame(loop); else running = false;
+  };
+  addEventListener('pointermove', e => {
+    tx = e.clientX; ty = e.clientY; cur.style.opacity = 1;
+    if (!running) { running = true; requestAnimationFrame(loop); }
+  }, { passive: true });
+  document.addEventListener('mouseleave', () => cur.style.opacity = 0);
+}
+
+/* ---------- Palabras rotativas del hero (pausa si la pestaña no está visible) ---------- */
+(() => {
+  const el = $('#rot'); if (!el || reduce) return;
+  const words = ['hooks que frenan el scroll', 'anuncios que convierten', 'noticias de Fortnite', 'reels con ritmo', 'motion graphics'];
+  let i = 0;
+  setInterval(() => {
+    if (document.hidden) return;
+    el.classList.add('out');
+    setTimeout(() => { i = (i + 1) % words.length; el.textContent = words[i]; el.classList.remove('out'); }, 350);
+  }, 2800);
+})();
+
+/* ---------- Contadores ---------- */
+(() => {
+  if (reduce || !io) return;
+  const co = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return; co.unobserve(e.target);
+    const end = +e.target.dataset.count, t0 = performance.now();
+    const tick = n => { const k = Math.min((n - t0) / 1400, 1); e.target.textContent = Math.round(end * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(tick); };
+    e.target.textContent = 0; requestAnimationFrame(tick);
+  }), { threshold: .6 });
+  $$('[data-count]').forEach(el => co.observe(el));
+})();
+
+/* ---------- Barras de idioma ---------- */
+(() => {
+  if (reduce || !io) return;
+  $$('.bar').forEach(b => {
+    b.style.width = '0'; b.style.transition = 'width 1.2s cubic-bezier(.22,1,.36,1)';
+    new IntersectionObserver((es, o) => { if (es[0].isIntersecting) { b.style.width = b.dataset.w; o.disconnect(); } }, { threshold: .5 }).observe(b);
+  });
+})();
+
+/* ---------- Botones magnéticos y tilt (1 cálculo por frame) ---------- */
+if (fine && !reduce) {
+  $$('.magnet').forEach(m => {
+    m.addEventListener('pointermove', e => { const r = m.getBoundingClientRect(); m.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .18}px, ${(e.clientY - r.top - r.height / 2) * .25}px)`; });
+    m.addEventListener('pointerleave', () => m.style.transform = '');
+  });
+  $$('.vid-wrap, .reel-card').forEach(c => {
+    let raf = 0;
+    c.addEventListener('pointermove', e => {
+      if (raf) return;
+      raf = requestAnimationFrame(() => {
+        raf = 0;
+        const r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width - .5, py = (e.clientY - r.top) / r.height - .5;
+        c.style.transform = `perspective(900px) rotateY(${px * 7}deg) rotateX(${-py * 7}deg) translateY(-6px)`;
+      });
+    });
+    c.addEventListener('pointerleave', () => { c.style.transform = ''; });
+  });
+}
+
+/* ---------- Filtros ---------- */
+$('#chips').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  $$('.chip').forEach(c => c.setAttribute('aria-pressed', c === b));
+  $$('.pitem').forEach(p => {
+    const show = b.dataset.f === 'all' || p.dataset.cat === b.dataset.f;
+    p.hidden = !show; p.classList.remove('pop', 'reveal'); p.style.opacity = '';
+    if (show) { void p.offsetWidth; p.classList.add('pop'); }
+  });
+});
+
+/* ---------- Video: vista previa y reproductor ---------- */
+const dlg = $('#vm'), full = $('#vf'), cap = $('#vt');
+let last = null;
+const openVideo = (p, from, t = 0) => {
+  last = from;
+  const wide = p.ratio === '16/9';
+  full.style.aspectRatio = wide ? '16/9' : '9/16';
+  full.style.width = wide ? 'min(92vw,142vh)' : 'min(88vw,45vh)';
+  full.poster = p.poster; full.src = p.src;
+  cap.textContent = p.desc; dlg.setAttribute('aria-label', p.title);
+  if (t) full.addEventListener('loadedmetadata', () => { full.currentTime = t; }, { once: true });
+  dlg.showModal(); full.play().catch(() => {});
+};
+$$('.vid-card[data-i]').forEach(card => {
+  const p = PROJECTS[card.dataset.i], pv = $('.vid-prev', card), bar = $('.vid-bar', card);
+  const stop = () => { card.classList.remove('is-prev'); pv.pause(); pv.currentTime = 0; bar.style.width = '0'; };
+  card.addEventListener('mouseenter', () => {
+    if (!fine || reduce || dlg.open) return;
+    if (!pv.getAttribute('src')) pv.src = p.src;
+    pv.play().then(() => card.classList.add('is-prev')).catch(() => {});
+  });
+  card.addEventListener('mouseleave', stop);
+  pv.addEventListener('timeupdate', () => { bar.style.width = (pv.currentTime / (pv.duration || 1) * 100) + '%'; });
+  card.addEventListener('click', () => { stop(); openVideo(p, card); });
+});
+const hookVideo = PROJECTS[0];
+$('#hook-open').addEventListener('click', e => openVideo(hookVideo, e.currentTarget, 0));
+$$('.step').forEach(s => s.addEventListener('click', () => openVideo(hookVideo, s, +s.dataset.t)));
+$('#vx').addEventListener('click', () => dlg.close());
+dlg.addEventListener('click', e => { if (e.target === dlg) dlg.close(); });
+dlg.addEventListener('close', () => { full.pause(); full.removeAttribute('src'); full.load(); if (last) last.focus(); });
+</script>
+</body>
+</html>
